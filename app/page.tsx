@@ -1,23 +1,16 @@
 import Hero from "@/components/landing/Hero";
-import Ticker from "@/components/landing/Ticker";
 import HowItWorks from "@/components/landing/HowItWorks";
-import Categories from "@/components/landing/Categories";
-import Stats from "@/components/landing/Stats";
-import FeaturedProblems from "@/components/landing/FeaturedProblems";
-import WhoItsFor from "@/components/landing/WhoItsFor";
-import CTA from "@/components/landing/CTA";
+import Roles from "@/components/landing/Roles";
+import CtaBand from "@/components/landing/CTA";
 
 export default function Home() {
   return (
-    <main className="bg-chalk">
+    <main className="bg-[#0e0e0e] min-h-screen text-[#f5f5dc]">
       <Hero />
-      <Ticker />
+      <hr className="border-t border-[#2a2a2a] mx-5 md:mx-10" />
       <HowItWorks />
-      <Categories />
-      <Stats />
-      <FeaturedProblems />
-      <WhoItsFor />
-      <CTA />
+      <Roles />
+      <CtaBand />
     </main>
   );
 }

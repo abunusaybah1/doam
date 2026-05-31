@@ -1,35 +1,44 @@
-import { Syne, DM_Sans, Space_Mono } from "next/font/google";
+import type { Metadata } from "next";
+import {
+  Playfair_Display,
+  IBM_Plex_Mono,
+  Source_Serif_4,
+} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-const syne = Syne({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-syne",
+  variable: "--font-playfair",
+  weight: ["400", "700", "900"],
 });
 
-const dmSans = DM_Sans({
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-dm",
-});
-
-const spaceMono = Space_Mono({
-  subsets: ["latin"],
-  weight: ["400", "700"],
   variable: "--font-mono",
+  weight: ["400", "500"],
 });
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["300", "400", "600"],
+});
+
+export const metadata: Metadata = {
+  title: "Do&minus;am — Community Problem Tracker",
+  description:
+    "A living documentary of real problems facing local communities.",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body
-        className={`${syne.variable} ${dmSans.variable} ${spaceMono.variable} bg-chalk font-dm antialiased`}
+        className={`${playfair.variable} ${ibmPlexMono.variable} ${sourceSerif.variable} antialiased`}
       >
         <Navbar />
         {children}
