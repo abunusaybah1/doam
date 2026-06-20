@@ -45,7 +45,7 @@ export default function Hero() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
           <Link
-            href="/signin"
+            href="/login"
             className="bg-[#cc4e00] text-[#f5f5dc] text-[0.75rem] uppercase tracking-widest px-6 py-4 text-center hover:bg-[#b34400] transition-colors"
           >
             Get Started!
@@ -61,8 +61,8 @@ export default function Hero() {
 
       <div className="mt-10 lg:mt-0">
         <div className="border border-[#2a2a2a] bg-[#141414] p-5">
-          <div className="flex items-center gap-2 text-[#cc4e00] text-[0.65rem] uppercase tracking-[0.18em] mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#cc4e00] animate-pulse-dot shrink-0" />
+          <div className="flex items-center gap-2 text-[#cc4e00] font-bold text-[0.65rem] uppercase tracking-[0.18em] mb-4">
+            {/* <span className="w-1.5 h-1.5 rounded-full bg-[#cc4e00] animate-pulse-dot shrink-0" /> */}
             Most recent reports
           </div>
           <div className="divide-y divide-[#2a2a2a]">

@@ -12,7 +12,7 @@ export default function CtaBand() {
         movement, and see real change happen in the local communities.
       </p>
       <Link
-        href="/signin"
+        href="/login"
         className="inline-block bg-[#0e0e0e] text-[#f5f5dc] text-[0.75rem] uppercase tracking-widest px-8 py-4 hover:bg-[#1c1c1c] transition-colors"
       >
         Get Started!

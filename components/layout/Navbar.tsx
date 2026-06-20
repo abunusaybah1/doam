@@ -24,8 +24,8 @@ export default function Navbar() {
           className="font-playfair text-2xl font-black text-[#f5f5dc] tracking-tight"
         >
           <Image
-            src="/images/orange-text-trans.png"
-            alt="Do&minus;am.ng"
+            src="/images/logos/orange-text-trans.png"
+            alt="Do-am.ng"
             width={70}
             height={80}
           />
@@ -42,7 +42,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="/signin"
+            href="/login"
             className="bg-[#cc4e00] text-[#f5f5dc] text-[0.7rem] uppercase tracking-widest px-4 py-2 hover:bg-[#b34400] transition-colors"
           >
             Get Started!
@@ -72,7 +72,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="/signin"
+            href="/login"
             onClick={() => setOpen(false)}
             className="bg-[#cc4e00] text-[#f5f5dc] text-[0.7rem] uppercase tracking-widest px-5 py-4 text-center hover:bg-[#b34400]"
           >
