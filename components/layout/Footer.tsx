@@ -25,7 +25,7 @@ export default function Footer() {
         </span>
 
         <span className="font-mono text-[11px] text-[#f5f5dc]/70">
-          Built by <span className="text-brand">Jasr Labs</span>
+          Built by <span className="text-brand">Widaad Labs</span>
         </span>
       </div>
     </footer>

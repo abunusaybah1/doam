@@ -1,28 +1,8 @@
 import Link from "next/link";
-
-const liveReports = [
-  {
-    tag: "Infrastructure",
-    text: "Broken streetlights on Lagos-Abeokuta Expressway for 4 months",
-    loc: "Agege, Lagos · 2 hrs ago",
-  },
-  {
-    tag: "Water",
-    text: "Community borehole non-functional since January",
-    loc: "Kuje, Abuja · 5 hrs ago",
-  },
-  {
-    tag: "Waste",
-    text: "Refuse dump blocking school gate for weeks",
-    loc: "Enugu North · 1 day ago",
-  },
-];
-
-const stats = [
-  { label: "Problems filed", num: "1,204" },
-  { label: "In progress", num: "38" },
-  { label: "Resolved", num: "91" },
-];
+import { stats } from "@/lib/data";
+import { latestReports } from "@/lib/data";
+import { GoLocation } from "react-icons/go";
+import { MdOutlineAccessTime } from "react-icons/md";
 
 export default function Hero() {
   return (
@@ -30,18 +10,15 @@ export default function Hero() {
       className="
      px-5 pt-10 pb-8 md:px-10 md:pt-20 md:pb-14 lg:flex lg:gap-16 lg:items-center"
     >
-      <div>
-        <p className="text-[#cc4e00] text-[0.65rem] uppercase tracking-[0.2em] mb-4">
-          Community problem tracker
-        </p>
+      <div className="lg:w-fit max-w-220">
         <h1 className="font-playfair text-[2.4rem] sm:text-[3rem] lg:text-[3.6rem] font-black leading-[1.05] mb-5">
           Your community&apos;s problems,{" "}
           <em className="italic text-[#cc4e00]">documented.</em>
         </h1>
-        <p className="font-serif-body font-light text-base sm:text-lg leading-[1.85] text-[#f5f5dc]/65 mb-8">
-          Do&minus;am is a living record of the real problems facing local
-          communities... reported by the people who live them... solved by the
-          people who care.
+        <p className="font-serif-body font-light text-base sm:text-lg leading-[1.85] text-[#f5f5dc]/65 mb-8 lg:max-w-fit">
+          Do&minus;am is adocumentary of the real problems facing local
+          communities... reported by the people who experience them first hand
+          them... solved by the people who care.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
           <Link
@@ -59,20 +36,33 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="mt-10 lg:mt-0">
+      <div className="mt-10 lg:mt-0 lg:w-fit">
         <div className="border border-[#2a2a2a] bg-[#141414] p-5">
           <div className="flex items-center gap-2 text-[#cc4e00] font-bold text-[0.65rem] uppercase tracking-[0.18em] mb-4">
             {/* <span className="w-1.5 h-1.5 rounded-full bg-[#cc4e00] animate-pulse-dot shrink-0" /> */}
             Most recent reports
           </div>
+          <hr className="mb-4 -mt-3 w-[30%] text-[#cc4e00] border" />
           <div className="divide-y divide-[#2a2a2a]">
-            {liveReports.map((r, i) => (
+            {latestReports.map((r, i) => (
               <div key={i} className="py-3 first:pt-0 last:pb-0">
-                <p className="text-[#cc4e00] text-[0.6rem] uppercase tracking-widest mb-1">
-                  {r.tag}
-                </p>
+                
                 <p className="text-[0.78rem] leading-[1.65]">{r.text}</p>
-                <p className="text-[0.6rem] text-[#f5f5dc]/45 mt-1">{r.loc}</p>
+                <div className="text-[#f5f5dc]/50 flex justify-between pr-5 md:pr-0 md:justify-start md:items-center mt-2 md:gap-2">
+                  <p className="text-[0.6rem] mt-1 flex gap-1 text-[#f5f5dc]/50">
+                    <span>
+                      <GoLocation className="text-[12px]" />
+                    </span>
+                    {r.loc}
+                  </p>
+                  {"-"}
+                  <p className="text-[0.6rem] mt-1  flex gap-1 ">
+                    <span>
+                      <MdOutlineAccessTime className="text-[12px]" />
+                    </span>
+                    {r.duration}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

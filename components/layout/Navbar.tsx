@@ -36,7 +36,7 @@ export default function Navbar() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-[#f5f5dc]/60 hover:text-[#f5f5dc] text-[0.7rem] uppercase tracking-widest transition-opacity"
+              className="text-[#f5f5dc]/60 hover:text-[#f5f5dc] text-[0.7rem] uppercase tracking-widest transition-opacity hover:underline underline-offset-4"
             >
               {item.name}
             </Link>
