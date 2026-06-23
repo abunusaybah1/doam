@@ -48,14 +48,14 @@ export default function Hero() {
               <div key={i} className="py-3 first:pt-0 last:pb-0">
                 
                 <p className="text-[0.78rem] leading-[1.65]">{r.text}</p>
-                <div className="text-[#f5f5dc]/50 flex justify-between pr-5 md:pr-0 md:justify-start md:items-center mt-2 md:gap-2">
-                  <p className="text-[0.6rem] mt-1 flex gap-1 text-[#f5f5dc]/50">
+                <div className="text-[#f5f5dc]/50 flex justify-between pr-5 md:pr-0 md:justify-start items-center mt-2 md:gap-2">
+                  <p className="text-[0.6rem] mt-1 flex items-center gap-1 text-[#f5f5dc]/50">
                     <span>
                       <GoLocation className="text-[12px]" />
                     </span>
                     {r.loc}
                   </p>
-                  {"-"}
+                  <span className="hidden md:block">•</span>
                   <p className="text-[0.6rem] mt-1  flex gap-1 ">
                     <span>
                       <MdOutlineAccessTime className="text-[12px]" />

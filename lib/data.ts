@@ -1,4 +1,8 @@
 import BadRoad from "@/public/images/bad-road.png";
+import Floor from "@/public/images/floor.png";
+import Darkness from "@/public/images/darkness.png";
+import Water from "@/public/images/water.png";
+
 
 export const latestReports = [
   {
@@ -42,7 +46,7 @@ export const sampleProblems = [
     location: "Abuja, FCT",
     title: "Children learning on bare concrete floors",
     desc: "No desks. No chairs. 60 pupils in a room built for 20. Teachers doing their best in conditions that say clearly — nobody is paying attention.",
-    img: BadRoad,
+    img: Floor,
     endorsement: 198,
     status: "URGENT",
   },
@@ -51,7 +55,7 @@ export const sampleProblems = [
     location: "Kano State",
     title: "4km for a bucket of water, every single day",
     desc: "Women and children walk hours before sunrise just to get water that is barely clean. There is no excuse for this in 2026. None.",
-    img: BadRoad,
+    img: Water,
     endorsement: 445,
     status: "CRITICAL",
   },
@@ -60,7 +64,7 @@ export const sampleProblems = [
     location: "Lagos State",
     title: "Darkness as a way of life",
     desc: "Generators running 20 hours a day. Businesses folding. Students reading by candlelight. NEPA has been a punchline for 40 years. It shouldn't still be funny.",
-    img: BadRoad,
+    img: Darkness,
     endorsement: 527,
     status: "ONGOING",
   },
