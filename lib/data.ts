@@ -3,7 +3,6 @@ import Floor from "@/public/images/floor.png";
 import Darkness from "@/public/images/darkness.png";
 import Water from "@/public/images/water.png";
 
-
 export const latestReports = [
   {
     // tag: "Infrastructure",
@@ -67,5 +66,36 @@ export const sampleProblems = [
     img: Darkness,
     endorsement: 527,
     status: "ONGOING",
+  },
+];
+
+export const steps = [
+  {
+    num: "01",
+    title: "See it... Report it.",
+    desc: "Anyone in a community can document a problem - by submitting evidence, location, and description - to create a public report that anyone can see.",
+  },
+  {
+    num: "02",
+    title: "It lives on the record.",
+    desc: "Every report becomes part of a public, permanent documentary of community issues; visible, searchable, and unforgettable.",
+  },
+  {
+    num: "03",
+    title: "Solvers step in.",
+    desc: "Problem solvers - NGOs, developers, engineers, volunteers - browse the list and pick what they can fix, and give real feedback on the progress.",
+  },
+];
+
+export const roles = [
+  {
+    tag: "Community members",
+    title: "You see it every day; Now document it.",
+    desc: "Whether it's a collapsed road, a polluted stream, or a school with no chairs, your report puts it on the map for everyone to see.",
+  },
+  {
+    tag: "Problem solvers",
+    title: "Find the work that actually matters.",
+    desc: "Engineers, developers, and NGOs can browse a list of real problems facing communities. Pick one... Fix it... Go for another one.",
   },
 ];

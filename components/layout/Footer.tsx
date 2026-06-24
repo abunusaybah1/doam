@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -20,12 +21,18 @@ export default function Footer() {
         </div>
 
         <span className="font-mono text-[11px] text-[#f5f5dc]/70">
-          Do&minus;am ©{new Date().getUTCFullYear()} &nbsp;| All rights
-          reserved.
+          Do&minus;am | {new Date().getUTCFullYear()} &nbsp;
         </span>
 
         <span className="font-mono text-[11px] text-[#f5f5dc]/70">
-          Built by <span className="text-brand">Widaad Labs</span>
+          Built by{" "}
+          <Link
+            href=""
+            className="text-white underline"
+            // target="_blank"
+          >
+            Widaad Labs
+          </Link>
         </span>
       </div>
     </footer>

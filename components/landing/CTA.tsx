@@ -8,11 +8,11 @@ export default function CtaBand() {
         problems?
       </h2>
       <p className="font-serif-body font-light text-[0.95rem] text-[#f5f5dc]/80 leading-[1.8] mb-8 max-w-lg mx-auto">
-        Join Do&minus;am and be part of the solution.Become a part of the
+        Join Do&minus;am and be part of the solution. Become a part of the
         movement, and see real change happen in the local communities.
       </p>
       <Link
-        href="/login"
+        href="/auth/login"
         className="inline-block bg-[#0e0e0e] text-[#f5f5dc] text-[0.75rem] uppercase tracking-widest px-8 py-4 hover:bg-[#1c1c1c] transition-colors"
       >
         Get Started!

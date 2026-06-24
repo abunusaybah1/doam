@@ -10,9 +10,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const navMenu = [
+    { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "How it works", href: "/how-it-works" },
-    { name: "Problems", href: "/problems" },
+    // { name: "Problems", href: "/problems" },
     { name: "Contact us", href: "/contact-us" },
   ];
 
@@ -42,7 +43,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="/login"
+            href="/auth/login"
             className="bg-[#cc4e00] text-[#f5f5dc] text-[0.7rem] uppercase tracking-widest px-4 py-2 hover:bg-[#b34400] transition-colors"
           >
             Get Started!
@@ -72,7 +73,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="/login"
+            href="/auth/login"
             onClick={() => setOpen(false)}
             className="bg-[#cc4e00] text-[#f5f5dc] text-[0.7rem] uppercase tracking-widest px-5 py-4 text-center hover:bg-[#b34400]"
           >

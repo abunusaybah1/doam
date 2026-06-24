@@ -22,7 +22,7 @@ export default function Hero() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
           <Link
-            href="/login"
+            href="/auth/login"
             className="bg-[#cc4e00] text-[#f5f5dc] text-[0.75rem] uppercase tracking-widest px-6 py-4 text-center hover:bg-[#b34400] transition-colors"
           >
             Get Started!

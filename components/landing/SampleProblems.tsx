@@ -8,7 +8,7 @@ import { BiSolidUpvote } from "react-icons/bi";
 export default function SampleProblems() {
   return (
     <section className="py-6">
-      <div className="px-10">
+      <div className="px-6 md:px-6 lg:px-10">
         <div className=" flex flex-col gap-6">
           <p className="font-barlow font-bold text-[.7rem] tracking-[.2em] uppercase text-ember -mb-5">
             Real problems, Real people...
@@ -19,7 +19,7 @@ export default function SampleProblems() {
           >
             This is what we&apos;re fixing.
           </h2>
-          <p className="font-lora italic text-[.95rem] leading-relaxed max-w-[80vw]">
+          <p className="font-lora text-[.95rem] leading-relaxed max-w-[80vw]">
             These aren&apos;t statistics. These are people&apos;s daily
             realities... and they&apos;re waiting for someone to DoAm.
           </p>
@@ -43,9 +43,9 @@ export default function SampleProblems() {
               >
                 {problem.status}
               </span>
-              <p className="text-[10px] absolute top-8 left-6 flex gap-1 items-center bg-[#cc4e00]/80 text-white px-2 py-1 rounded-full uppercase font-medium">
+              <p className="text-[10px] absolute top-8 left-6 flex gap-1 items-center bg-[#cc4e00] text-white px-2 py-1 rounded-full uppercase font-medium">
                 <span>
-                  <GrLocation />
+                  <GrLocation /> 
                 </span>
                 {problem.location}
               </p>
@@ -54,7 +54,7 @@ export default function SampleProblems() {
                 <p className="top-28 left-6 text-[.9em] font-semibold">
                   {problem.desc}
                 </p>
-                <p className=" text-[11px] w-fit flex gap-1 items-center bg-[#cc4e00]/80 text-white px-2 py-1 rounded-full uppercase font-medium">
+                <p className="mt-2 text-[11px] w-fit flex gap-1 items-center bg-white/70 text-gray-600 px-2 py-1 rounded-full uppercase font-medium">
                   <span>
                     <BiSolidUpvote />{" "}
                   </span>

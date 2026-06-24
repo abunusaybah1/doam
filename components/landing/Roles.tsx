@@ -1,20 +1,9 @@
-const roles = [
-  {
-    tag: "Community members",
-    title: "You see it every day; Now document it.",
-    desc: "Whether it's a collapsed road, a polluted stream, or a school with no chairs, your report puts it on the map for everyone to see.",
-  },
-  {
-    tag: "Problem solvers",
-    title: "Find the work that actually matters.",
-    desc: "Engineers, developers, and NGOs can browse a list of real problems facing communities. Pick one... Fix it... Go for another one.",
-  },
-];
+import { roles } from "@/lib/data";
 
 export default function Roles() {
   return (
     <section className="px-5 pb-12 md:px-10 md:pb-16">
-      <div className="flex items-center gap-4 text-[#cc4e00] text-[0.65rem] uppercase tracking-[0.2em] mb-8">
+      <div className="flex items-center font-bold gap-4 text-[#cc4e00] text-[0.65rem] uppercase tracking-[0.2em] mb-8">
         Who it&apos;s for
         <span className="flex-1 h-px bg-[#2a2a2a]" />
       </div>

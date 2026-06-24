@@ -1,20 +1,4 @@
-const steps = [
-  {
-    num: "01",
-    title: "See it... Report it.",
-    desc: "Anyone in a community can document a problem - by submitting evidence, location, and description - to create a public report that anyone can see.",
-  },
-  {
-    num: "02",
-    title: "It lives on the record.",
-    desc: "Every report becomes part of a public, permanent documentary of community issues; visible, searchable, and unforgettable.",
-  },
-  {
-    num: "03",
-    title: "Solvers step in.",
-    desc: "Problem solvers - NGOs, developers, engineers, volunteers - browse the list and pick what they can fix, and give real feedback on the progress.",
-  },
-];
+import { steps } from "@/lib/data";
 
 export default function HowItWorks() {
   return (
