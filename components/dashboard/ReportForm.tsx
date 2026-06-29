@@ -2,65 +2,26 @@
 
 import { useState } from "react";
 import { reportProblem } from "@/app/dashboard/report/actions";
+import Image from "next/image";
+import { NigeriaStatesAndLGAs } from "@/hooks/NigeriaStatesAndLGAs";
+import { Profile } from "@/types";
+import { CATEGORIES } from "@/lib/data";
 
-const CATEGORIES = [
-  "Infrastructure",
-  "Healthcare",
-  "Education",
-  "Water & Sanitation",
-  "Security",
-  "Environment",
-  "Agriculture",
-  "Energy",
-  "Transportation",
-  "Other",
-];
-
-const NIGERIAN_STATES = [
-  "Abia",
-  "Adamawa",
-  "Akwa Ibom",
-  "Anambra",
-  "Bauchi",
-  "Bayelsa",
-  "Benue",
-  "Borno",
-  "Cross River",
-  "Delta",
-  "Ebonyi",
-  "Edo",
-  "Ekiti",
-  "Enugu",
-  "FCT",
-  "Gombe",
-  "Imo",
-  "Jigawa",
-  "Kaduna",
-  "Kano",
-  "Katsina",
-  "Kebbi",
-  "Kogi",
-  "Kwara",
-  "Lagos",
-  "Nasarawa",
-  "Niger",
-  "Ogun",
-  "Ondo",
-  "Osun",
-  "Oyo",
-  "Plateau",
-  "Rivers",
-  "Sokoto",
-  "Taraba",
-  "Yobe",
-  "Zamfara",
-];
-
-export default function ReportForm({ userId }: { userId: string }) {
+export default function ReportForm({
+  userId,
+  //   profile,
+}: {
+  userId: string;
+  profile: Profile | null;
+}) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [videoName, setVideoName] = useState<string | null>(null);
+  const [selectedState, setSelectedState] = useState("");
+  const { data: locationData, loading: locationLoading } =
+    NigeriaStatesAndLGAs();
+  const lgas = locationData.find((s) => s.state === selectedState)?.lgas ?? [];
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -86,7 +47,7 @@ export default function ReportForm({ userId }: { userId: string }) {
           type="text"
           required
           placeholder="Short title describing the problem"
-          className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm placeholder:text-umber transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -100,7 +61,7 @@ export default function ReportForm({ userId }: { userId: string }) {
           required
           rows={5}
           placeholder="Describe the problem in detail — what is happening, how long has it been going on, what has been tried..."
-          className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm placeholder:text-umber transition-colors resize-none"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors resize-none"
         />
       </div>
 
@@ -113,9 +74,10 @@ export default function ReportForm({ userId }: { userId: string }) {
           <select
             name="category"
             required
-            className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm transition-colors"
+            defaultValue="select"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
-            <option value="" disabled selected>
+            <option value="select" disabled>
               Select category
             </option>
             {CATEGORIES.map((c) => (
@@ -133,9 +95,10 @@ export default function ReportForm({ userId }: { userId: string }) {
           <select
             name="condition"
             required
-            className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm transition-colors"
+            defaultValue="select"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
-            <option value="" disabled selected>
+            <option value="select" disabled>
               How severe?
             </option>
             <option value="emergency">Emergency — life threatening</option>
@@ -149,19 +112,23 @@ export default function ReportForm({ userId }: { userId: string }) {
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
           <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-            State <span className="text-orange">*</span>
+            State of Occurence <span className="text-orange">*</span>
           </label>
           <select
             name="state"
             required
-            className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm transition-colors"
+            value={selectedState}
+            onChange={(e) => {
+              setSelectedState(e.target.value);
+            }}
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
-            <option value="" disabled selected>
-              Select state
+            <option value="" disabled>
+              {locationLoading ? "Loading states..." : "Select state"}
             </option>
-            {NIGERIAN_STATES.map((s) => (
-              <option key={s} value={s}>
-                {s}
+            {locationData.map((s, i) => (
+              <option key={i} value={s.state}>
+                {s.state}
               </option>
             ))}
           </select>
@@ -169,15 +136,24 @@ export default function ReportForm({ userId }: { userId: string }) {
 
         <div className="flex flex-col gap-1.5">
           <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-            LGA <span className="text-orange">*</span>
+            Local Government Area <span className="text-orange">*</span>
           </label>
-          <input
+          <select
             name="lga"
-            type="text"
             required
-            placeholder="Local government area"
-            className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm placeholder:text-umber transition-colors"
-          />
+            defaultValue="select"
+            disabled={!selectedState}
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          >
+            <option value="select" disabled>
+              {!selectedState ? "Select state first" : "Select LGA"}
+            </option>
+            {lgas.map((l) => (
+              <option key={l.name} value={l.name}>
+                {l.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -190,7 +166,7 @@ export default function ReportForm({ userId }: { userId: string }) {
           name="address"
           type="text"
           placeholder="Specific street or landmark"
-          className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm placeholder:text-umber transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -205,7 +181,7 @@ export default function ReportForm({ userId }: { userId: string }) {
             type="text"
             required
             placeholder="e.g. 3 months, since 2021"
-            className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm placeholder:text-umber transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
           />
         </div>
 
@@ -218,7 +194,7 @@ export default function ReportForm({ userId }: { userId: string }) {
             type="number"
             min={1}
             placeholder="Estimated number"
-            className="bg-surface border border-border focus:border-orange outline-none px-4 py-3.5 text-parch text-sm placeholder:text-umber transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
           />
         </div>
       </div>
@@ -228,12 +204,12 @@ export default function ReportForm({ userId }: { userId: string }) {
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
           Photo <span className="text-orange">*</span>
         </label>
-        <label className="cursor-pointer border border-dashed border-border hover:border-orange transition-colors px-4 py-8 flex flex-col items-center gap-2 bg-surface">
-          <span className="text-[0.7rem] uppercase tracking-widest text-umber">
+        <label className="cursor-pointer transition-colors px-4 py-8 flex flex-col items-center gap-2 bg-parch">
+          <span className="text-[0.7rem] uppercase tracking-widest text-bark">
             {imagePreview ? "Change photo" : "Click to upload photo"}
           </span>
           {imagePreview && (
-            <img
+            <Image
               src={imagePreview}
               alt="Preview"
               className="mt-2 max-h-40 object-contain"
@@ -258,8 +234,8 @@ export default function ReportForm({ userId }: { userId: string }) {
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
           Video <span className="text-umber/50">(optional)</span>
         </label>
-        <label className="cursor-pointer border border-dashed border-border hover:border-orange transition-colors px-4 py-6 flex flex-col items-center gap-2 bg-surface">
-          <span className="text-[0.7rem] uppercase tracking-widest text-umber">
+        <label className="cursor-pointer transition-colors px-4 py-6 flex flex-col items-center gap-2 bg-parch">
+          <span className="text-[0.7rem] uppercase tracking-widest text-bark">
             {videoName ? videoName : "Click to upload video"}
           </span>
           <input
@@ -286,7 +262,7 @@ export default function ReportForm({ userId }: { userId: string }) {
         disabled={loading}
         className="bg-orange text-parch text-[0.7rem] uppercase tracking-widest py-4 hover:bg-ember transition-colors disabled:opacity-60 mt-2"
       >
-        {loading ? "Submitting..." : "Submit report →"}
+        {loading ? "Submitting..." : "Submit report"}
       </button>
     </form>
   );

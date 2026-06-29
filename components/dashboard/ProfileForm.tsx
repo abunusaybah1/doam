@@ -3,57 +3,10 @@
 import { useState } from "react";
 import { updateProfile } from "@/app/dashboard/profile/actions";
 import Image from "next/image";
+import { NigeriaStatesAndLGAs } from "@/hooks/NigeriaStatesAndLGAs";
+import { Profile } from "@/types";
 
-const NIGERIAN_STATES = [
-  "Abia",
-  "Adamawa",
-  "Akwa Ibom",
-  "Anambra",
-  "Bauchi",
-  "Bayelsa",
-  "Benue",
-  "Borno",
-  "Cross River",
-  "Delta",
-  "Ebonyi",
-  "Edo",
-  "Ekiti",
-  "Enugu",
-  "FCT",
-  "Gombe",
-  "Imo",
-  "Jigawa",
-  "Kaduna",
-  "Kano",
-  "Katsina",
-  "Kebbi",
-  "Kogi",
-  "Kwara",
-  "Lagos",
-  "Nasarawa",
-  "Niger",
-  "Ogun",
-  "Ondo",
-  "Osun",
-  "Oyo",
-  "Plateau",
-  "Rivers",
-  "Sokoto",
-  "Taraba",
-  "Yobe",
-  "Zamfara",
-];
 
-type Profile = {
-  full_name: string;
-  username: string | null;
-  phone: string | null;
-  state: string | null;
-  lga: string | null;
-  bio: string | null;
-  avatar_url: string | null;
-  is_solver: boolean;
-};
 
 export default function ProfileForm({
   profile,
@@ -70,6 +23,10 @@ export default function ProfileForm({
   const [avatarPreview, setAvatarPreview] = useState<string | null>(
     profile?.avatar_url ?? null,
   );
+  const [selectedState, setSelectedState] = useState(profile?.state ?? "");
+  const { data: locationData, loading: locationLoading } =
+    NigeriaStatesAndLGAs();
+  const lgas = locationData.find((s) => s.state === selectedState)?.lgas ?? [];
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -189,15 +146,18 @@ export default function ProfileForm({
           <select
             name="state"
             required
-            defaultValue={profile?.state ?? ""}
+            value={selectedState}
+            onChange={(e) => {
+              setSelectedState(e.target.value);
+            }}
             className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
             <option value="" disabled>
-              Select state
+              {locationLoading ? "Loading states..." : "Select state"}
             </option>
-            {NIGERIAN_STATES.map((s) => (
-              <option key={s} value={s}>
-                {s}
+            {locationData.map((s,i) => (
+              <option key={i} value={s.state}>
+                {s.state}
               </option>
             ))}
           </select>
@@ -207,14 +167,22 @@ export default function ProfileForm({
           <label className="text-[0.68rem] uppercase tracking-widest text-umber">
             Local Government Area <span className="text-orange">*</span>
           </label>
-          <input
+          <select
             name="lga"
-            type="text"
             required
             defaultValue={profile?.lga ?? ""}
-            placeholder="Local government area"
+            disabled={!selectedState}
             className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
-          />
+          >
+            <option value="" disabled>
+              {!selectedState ? "Select state first" : "Select LGA"}
+            </option>
+            {lgas.map((l) => (
+              <option key={l.name} value={l.name}>
+                {l.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
