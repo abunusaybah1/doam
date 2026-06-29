@@ -7,7 +7,7 @@ import { BiSolidUpvote } from "react-icons/bi";
 
 export default function SampleProblems() {
   return (
-    <section className="py-6">
+    <section className="py-6 ">
       <div className="px-6 md:px-6 lg:px-10">
         <div className=" flex flex-col gap-6">
           <p className="font-barlow font-bold text-[.7rem] tracking-[.2em] uppercase text-ember -mb-5">
@@ -35,7 +35,7 @@ export default function SampleProblems() {
             <Image
               src={problem.img}
               alt={problem.title}
-              className="w-full h-full object-cover opacity-40 border border-[#2a2a2a] rounded-lg shadow-lg shadow-[#ffffff]/10"
+              className="w-full h-full object-cover opacity-30 border border-[#2a2a2a] rounded-lg shadow-lg shadow-[#ffffff]/10"
             />
             <div className=" ">
               <span
@@ -45,22 +45,22 @@ export default function SampleProblems() {
               </span>
               <p className="text-[10px] absolute top-8 left-6 flex gap-1 items-center bg-[#cc4e00] text-white px-2 py-1 rounded-full uppercase font-medium">
                 <span>
-                  <GrLocation /> 
+                  <GrLocation />
                 </span>
                 {problem.location}
               </p>
-              <div className="absolute max-w-[80%] bottom-8 left-6 flex flex-col justify-end lg:h-full gap-2 md:h-fit sm:h-full">
+              <div className="absolute max-w-[80%] bottom-14 left-6 flex flex-col justify-end lg:h-full gap-2 md:h-fit sm:h-full">
                 <h3 className=" text-[1.25em] font-bold">{problem.title}</h3>
-                <p className="top-28 left-6 text-[.9em] font-semibold">
+                <p className="top-28 left-6 text-[.9em] font-normal leading-[1.4]">
                   {problem.desc}
                 </p>
-                <p className="mt-2 text-[11px] w-fit flex gap-1 items-center bg-white/70 text-gray-600 px-2 py-1 rounded-full uppercase font-medium">
-                  <span>
-                    <BiSolidUpvote />{" "}
-                  </span>
-                  {problem.endorsement} endorsement
-                </p>
               </div>
+              <p className=" absolute bottom-4.25 left-4.25 mt-2 text-[11px] w-fit bg-orange flex gap-1 items-center  text-white px-2 py-1 rounded-bl-lg uppercase font-medium">
+                <span>
+                  <BiSolidUpvote />{" "}
+                </span>
+                {problem.endorsement} endorsement
+              </p>
             </div>
           </div>
         ))}

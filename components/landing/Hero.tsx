@@ -25,7 +25,7 @@ export default function Hero() {
             href="/auth/login"
             className="bg-[#cc4e00] text-[#f5f5dc] text-[0.75rem] uppercase tracking-widest px-6 py-4 text-center hover:bg-[#b34400] transition-colors"
           >
-            Get Started!
+            Get Started
           </Link>
           {/* <Link
             href="/problems"
@@ -37,8 +37,8 @@ export default function Hero() {
       </div>
 
       <div className="mt-10 lg:mt-0 lg:w-fit">
-        <div className="border border-[#2a2a2a] bg-[#141414] p-5">
-          <div className="flex items-center gap-2 text-[#cc4e00] font-bold text-[0.65rem] uppercase tracking-[0.18em] mb-4">
+        <div className="border border-border bg-[#141414] p-5">
+          <div className="flex items-center gap-2 text-orange font-bold text-[0.65rem] uppercase tracking-[0.18em] mb-4">
             {/* <span className="w-1.5 h-1.5 rounded-full bg-[#cc4e00] animate-pulse-dot shrink-0" /> */}
             Most recent reports
           </div>

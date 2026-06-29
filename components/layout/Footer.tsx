@@ -31,7 +31,7 @@ export default function Footer() {
             className="text-white underline"
             // target="_blank"
           >
-            Widaad Labs
+            Almattech
           </Link>
         </span>
       </div>

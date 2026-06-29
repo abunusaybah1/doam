@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 const LoginForm = () => {
   const [loading, setLoading] = React.useState(false);
@@ -11,6 +12,7 @@ const LoginForm = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const router = useRouter();
+  const [eyeOpen, setEyeOpen] = useState(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +29,9 @@ const LoginForm = () => {
     if (signInError) {
       setError(signInError.message);
       setLoading(false);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
       return;
     }
 
@@ -47,7 +52,7 @@ const LoginForm = () => {
           placeholder="you@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-transparent border-2 border-parch focus:border-orange outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -55,15 +60,24 @@ const LoginForm = () => {
         <label className="font-barlow font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
           Password
         </label>
-        <input
-          name="password"
-          type="password"
-          required
-          placeholder="Your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="bg-transparent border-2 border-parch focus:border-orange outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
-        />
+        <div className="flex ">
+          <input
+            name="password"
+            type={eyeOpen ? "password" : "text"}
+            required
+            placeholder="Your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="flex-6/7 bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          />
+          <button
+            type="button"
+            onClick={() => setEyeOpen(!eyeOpen)}
+            className="flex-1/7 w-fit bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors flex items-center justify-center"
+          >
+            {eyeOpen ? <FaRegEye /> : <FaRegEyeSlash />}
+          </button>
+        </div>
       </div>
 
       {error && (
@@ -81,7 +95,7 @@ const LoginForm = () => {
       </button>
 
       <p className="font-barlow text-[.75rem] tracking-wide text-umber text-center">
-        Don&copy;t have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link
           href="/auth/signup"
           className="underline hover:text-orange transition-colors"
@@ -89,6 +103,12 @@ const LoginForm = () => {
           Create one
         </Link>
       </p>
+      <Link
+        href="/auth/forgot-password"
+        className="text-orange hover:underline text-center text-[.75rem] tracking-wide mt-2"
+      >
+        Forgot password?
+      </Link>
     </form>
   );
 };

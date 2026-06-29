@@ -57,6 +57,7 @@ const SignUpForm = () => {
     setLoading(false);
   };
 
+  // Email Confirmation logic
   if (success) {
     return (
       <div className="flex flex-col gap-4">
@@ -64,12 +65,12 @@ const SignUpForm = () => {
           <p className="font-barlow font-bold text-[.78rem] tracking-[.12em] uppercase text-orange mb-1">
             Check your email
           </p>
-          <p className="font-lora text-[.92rem] text-bark">
+          <p className="font-lora text-[.92rem] text-parch/70 leading-relaxed">
             We sent a confirmation link to <strong>{email}</strong>. Click it to
             activate your account.
           </p>
         </div>
-        <p className="font-barlow text-[.75rem] tracking-wide text-umber">
+        <p className="font-barlow text-[.75rem] tracking-wide text-parch/70">
           Wrong email?{" "}
           <button
             onClick={() => {
@@ -99,7 +100,7 @@ const SignUpForm = () => {
             placeholder="Abdulmatiin"
             value={fName}
             onChange={(e) => setFName(e.target.value)}
-            className="bg-transparent border-2 border-parch focus:border-orange outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
           />
         </div>
         <div className="flex flex-col gap-1.5 flex-1">
@@ -113,7 +114,7 @@ const SignUpForm = () => {
             placeholder="Ismail"
             value={lName}
             onChange={(e) => setLName(e.target.value)}
-            className="bg-transparent border-2 border-parch focus:border-orange outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
           />
         </div>
       </div>
@@ -129,7 +130,7 @@ const SignUpForm = () => {
           placeholder="you@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-transparent border-2 border-parch focus:border-orange outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -145,7 +146,7 @@ const SignUpForm = () => {
           placeholder="Min. 8 characters"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="bg-transparent border-2 border-parch focus:border-orange outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -162,7 +163,7 @@ const SignUpForm = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           onKeyUp={verifyPassword}
-          className="bg-transparent border-2 border-parch focus:border-orange outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 

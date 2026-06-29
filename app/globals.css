@@ -1,36 +1,42 @@
 @import "tailwindcss";
 
-@tailwind utilities;
+@theme {
+  /* colors */
+  --color-bark:    #0e0e0e;
+  --color-surface: #1a1a1a;
+  --color-parch:   #f0ead6;
+  --color-orange:  #cc4e00;
+  --color-ember:   #b34400;
+  --color-umber:   #8a7a6a;
+  --color-warm:    #4a3f35;
+  --color-border:  #2a2a2a;
+
+  /* fonts */
+  --font-poppins:  "Poppins", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
 
 @layer base {
   body {
-    background-color: #0e0e0e;
-    color: #f5f5dc;
-    font-family: var(--font-mono), monospace;
+    background-color: var(--color-bark);
+    color: var(--color-parch);
+    font-family: var(--font-poppins);
   }
-}
 
-@layer utilities {
-  .font-playfair {
-    font-family: var(--font-playfair), serif;
+  * {
+    box-sizing: border-box;
   }
-  .font-serif-body {
-    font-family: var(--font-serif), serif;
-  }
-  .font-mono-body {
-    font-family: var(--font-mono), monospace;
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-playfair);
   }
 }
 
 @keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.25;
-  }
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
 }
+
 .animate-pulse-dot {
   animation: pulse-dot 1.5s ease-in-out infinite;
 }
