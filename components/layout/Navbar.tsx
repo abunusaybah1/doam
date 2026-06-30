@@ -20,8 +20,9 @@ export default function Navbar() {
 
   const navMenu = [
     { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
+    // { name: "About", href: "/about" },
     { name: "How it works", href: "/how-it-works" },
+    { name: "Problems", href: "/problems" },
     { name: "Contact us", href: "/contact-us" },
   ];
 

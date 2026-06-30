@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GrLocation } from "react-icons/gr";
 import { BiSolidUpvote } from "react-icons/bi";
-import { FiArrowRight } from "react-icons/fi";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 export default async function ProblemsPage() {
   const supabase = await createClient();
@@ -54,11 +54,11 @@ export default async function ProblemsPage() {
           <p className="text-parch/50 text-sm">No problems reported yet.</p>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex flex-wrap gap-6">
           {problems?.map((problem) => (
             <div
               key={problem.id}
-              className="flex flex-col bg-surface rounded-lg overflow-hidden hover:shadow-lg transition-colors"
+              className="flex flex-col bg-surface rounded-lg overflow-hidden transition-all hover:shadow-[0_8px_24px_rgba(255,140,0,0.15)] hover:-translate-y-1 w-full md:w-[47%] lg:w-[31%]"
             >
               {/* image with condition + status badges */}
               <div className="relative h-48 w-full">
@@ -66,8 +66,9 @@ export default async function ProblemsPage() {
                   <Image
                     src={problem.thumbnail_url}
                     alt={problem.heading}
-                    fill
-                    className="object-cover"
+                    width={400}
+                    height={192}
+                    className="w-full h-full object-cover"
                   />
                 ) : (
                   <div className="w-full h-full bg-bark" />
@@ -89,17 +90,17 @@ export default async function ProblemsPage() {
                   className={`absolute top-0 left-0 text-[10px] text-parch ${
                     statusColor[problem.status] ?? "bg-umber"
                   } px-2.5 py-1 rounded- uppercase font-bold tracking-wide`}
-                > 
+                >
                   {statusLabel[problem.status] ?? problem.status}
                 </span>
               </div>
 
               {/* content block below image */}
-              <div className="flex flex-col gap-3 p-5 flex-1">
+              <div className="flex flex-col gap-3 p-5 flex-1 border-t border-t-border">
                 <div className="flex items-center justify-between">
-                  <p className="text-[0.65rem] uppercase tracking-widest text-umber">
+                  {/* <p className="text-[0.65rem] uppercase tracking-widest text-umber">
                     {problem.category}
-                  </p>
+                  </p> */}
                   <p className="flex items-center gap-1 text-[0.7rem] text-umber">
                     <GrLocation />
                     {problem.lga}, {problem.state}
@@ -116,7 +117,7 @@ export default async function ProblemsPage() {
 
                 <div className="flex items-center justify-between pt-3 border-t border-border mt-2">
                   <p className="flex items-center gap-1.5 text-[0.75rem] text-parch/70">
-                    <BiSolidUpvote className="text-orange" />
+                    <BiSolidUpvote className="text-orange -mt-0.5" />
                     {problem.endorsement_count} endorsement
                     {problem.endorsement_count !== 1 ? "s" : ""}
                   </p>
@@ -126,7 +127,7 @@ export default async function ProblemsPage() {
                     className="flex items-center gap-1.5 text-[0.75rem] uppercase tracking-wide font-bold text-orange hover:text-ember transition-colors"
                   >
                     View details
-                    <FiArrowRight />
+                    <FaExternalLinkAlt className="scale-90" />
                   </Link>
                 </div>
               </div>

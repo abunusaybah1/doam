@@ -10,7 +10,7 @@ import { Profile } from "@/types";
 
 export default function ProfileForm({
   profile,
-  userId,
+  // userId,
   redirectTo,
 }: {
   profile: Profile | null;

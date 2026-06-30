@@ -4,13 +4,12 @@ import { useState } from "react";
 import imageCompression from "browser-image-compression";
 import { reportProblem } from "@/app/dashboard/report/actions";
 import { NigeriaStatesAndLGAs } from "@/hooks/NigeriaStatesAndLGAs";
-import { Profile } from "@/types";
 import { CATEGORIES, MONTHS } from "@/lib/data";
 
 const MAX_RAW_SIZE_MB = 10; // reject anything absurdly large before even trying to compress
 
 export default function ReportForm({
-  userId,
+  // userId,
   // profile,
 }: {
   userId: string;

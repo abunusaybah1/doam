@@ -20,7 +20,6 @@ export async function claimProblem(formData: FormData) {
     return { error: "Plan and timeline are required" };
   }
 
-  // check profile completeness
   const { data: profile } = await supabase
     .from("user_profiles")
     .select("username, phone, state, lga, is_solver")
@@ -42,7 +41,6 @@ export async function claimProblem(formData: FormData) {
     };
   }
 
-  // check there's no existing active claim on this problem
   const { data: existingClaim } = await supabase
     .from("claims")
     .select("id")

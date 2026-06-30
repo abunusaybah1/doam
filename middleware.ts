@@ -27,10 +27,13 @@ export async function middleware(request: NextRequest) {
     },
   );
 
-  // Refresh session — NEVER remove this
+  // Reads session from cookies locally — no network call, won't fail on flaky internet.
+  // This still refreshes the token if it's close to expiry (handled internally by the SSR package).
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const user = session?.user ?? null;
 
   // Define protected routes
   const isProtectedRoute = request.nextUrl.pathname.startsWith("/dashboard");
@@ -59,13 +62,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths EXCEPT:
-     * - _next/static (static files)
-     * - _next/image (image optimization)
-     * - favicon.ico
-     * - Public assets
-     */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
