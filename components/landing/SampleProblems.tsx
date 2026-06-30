@@ -35,15 +35,17 @@ export default function SampleProblems() {
             <Image
               src={problem.img}
               alt={problem.title}
-              className="w-full h-full object-cover opacity-30 border border-[#2a2a2a] rounded-lg shadow-lg shadow-[#ffffff]/10"
+              width={300}
+              height={200}
+              className="w-full h-full object-cover opacity-30 border border-border rounded-lg shadow-lg shadow-[#ffffff]/10"
             />
             <div className=" ">
               <span
-                className={` text-[10px] absolute top-8 right-6 float-end ${problem.status === "CRITICAL" ? "bg-red-500 text-white" : problem.status === "URGENT" ? "bg-orange-500 text-white" : "bg-green-500 text-white"} px-2 py-1 rounded-full uppercase font-bold tracking-wide`}
+                className={` text-[10px] absolute top-8 right-6 float-end text-parch ${problem.status === "CRITICAL" ? "bg-red-500" : problem.status === "URGENT" ? "bg-orange-500" : "bg-green-500"} px-2 py-1 rounded-full uppercase font-bold tracking-wide`}
               >
                 {problem.status}
               </span>
-              <p className="text-[10px] absolute top-8 left-6 flex gap-1 items-center bg-[#cc4e00] text-white px-2 py-1 rounded-full uppercase font-medium">
+              <p className="text-[10px] absolute top-8 left-6 flex gap-1 items-center bg-orange text-parch px-2 py-1 rounded-full uppercase font-medium">
                 <span>
                   <GrLocation />
                 </span>
@@ -55,7 +57,7 @@ export default function SampleProblems() {
                   {problem.desc}
                 </p>
               </div>
-              <p className=" absolute bottom-4.25 left-4.25 mt-2 text-[11px] w-fit bg-orange flex gap-1 items-center  text-white px-2 py-1 rounded-bl-lg uppercase font-medium">
+              <p className=" absolute bottom-4.25 left-4.25 mt-2 text-[11px] w-fit bg-orange flex gap-1 items-center  text-parch px-2 py-1 rounded-bl-lg uppercase font-medium">
                 <span>
                   <BiSolidUpvote />{" "}
                 </span>

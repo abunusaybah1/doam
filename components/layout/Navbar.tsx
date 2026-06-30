@@ -75,6 +75,8 @@ export default function Navbar() {
             alt="Do-am.ng"
             width={70}
             height={80}
+            loading="eager"
+            className="w-[70%] h-[70%]"
           />
         </Link>
 
@@ -145,7 +147,6 @@ export default function Navbar() {
             </>
           )}
         </div>
-
         {/* mobile toggle */}
         <button
           className="md:hidden border border-orange border-r-4 text-parch px-2 py-1 text-2xl leading-none cursor-pointer"

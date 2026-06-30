@@ -1,38 +1,122 @@
 "use client";
 
 import { useState } from "react";
+import imageCompression from "browser-image-compression";
 import { reportProblem } from "@/app/dashboard/report/actions";
-import Image from "next/image";
 import { NigeriaStatesAndLGAs } from "@/hooks/NigeriaStatesAndLGAs";
 import { Profile } from "@/types";
-import { CATEGORIES } from "@/lib/data";
+import { CATEGORIES, MONTHS } from "@/lib/data";
+
+const MAX_RAW_SIZE_MB = 10; // reject anything absurdly large before even trying to compress
 
 export default function ReportForm({
   userId,
-  //   profile,
+  // profile,
 }: {
   userId: string;
-  profile: Profile | null;
+  // profile: Profile | null;
 }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [videoName, setVideoName] = useState<string | null>(null);
+  const [compressing, setCompressing] = useState(false);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+
+  async function handleImagesChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []).slice(0, 3);
+    setError("");
+
+    // reject absurdly large files before even attempting compression
+    const tooLarge = files.find((f) => f.size > MAX_RAW_SIZE_MB * 1024 * 1024);
+    if (tooLarge) {
+      setError(
+        `"${tooLarge.name}" is too large (max ${MAX_RAW_SIZE_MB}MB before compression). Please choose a smaller file.`,
+      );
+      e.target.value = "";
+      return;
+    }
+
+    setCompressing(true);
+
+    try {
+      const compressedFiles = await Promise.all(
+        files.map(
+          (file) =>
+            imageCompression(file, {
+              maxSizeMB: 1,
+              maxWidthOrHeight: 1600,
+              useWebWorker: true,
+            }),
+          console.log(
+            "old size:",
+            files.map((f) => f.size/1024/1024),
+          ),
+        ),
+      );
+
+      setImageFiles(compressedFiles);
+      console.log(
+        "new size:",
+        compressedFiles.map((f) => f.size/1024/1024),
+      );
+
+      setImagePreviews(compressedFiles.map((f) => URL.createObjectURL(f)));
+    } catch {
+      setError("Could not process one of the images. Try a different photo.");
+    } finally {
+      setCompressing(false);
+    }
+  }
+
   const [selectedState, setSelectedState] = useState("");
   const { data: locationData, loading: locationLoading } =
     NigeriaStatesAndLGAs();
   const lgas = locationData.find((s) => s.state === selectedState)?.lgas ?? [];
+  const [startMonth, setStartMonth] = useState("");
+  const [startYear, setStartYear] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (imageFiles.length === 0) {
+      setError("At least one photo is required");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
     const formData = new FormData(e.currentTarget);
+
+    // remove whatever the native file input put in, replace with compressed files
+    formData.delete("images");
+    imageFiles.forEach((file) => formData.append("images", file));
+
     const result = await reportProblem(formData);
 
     setLoading(false);
     if (result?.error) setError(result.error);
+  }
+
+  function getDuration(year: string, month: string): string {
+    if (!year || !month) return "";
+
+    const start = new Date(parseInt(year), parseInt(month) - 1);
+    const now = new Date();
+
+    const totalMonths =
+      (now.getFullYear() - start.getFullYear()) * 12 +
+      (now.getMonth() - start.getMonth());
+
+    if (totalMonths < 1) return "Less than a month";
+    if (totalMonths < 12)
+      return `${totalMonths} month${totalMonths > 1 ? "s" : ""}`;
+
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+
+    if (months === 0) return `${years} year${years > 1 ? "s" : ""}`;
+    return `${years} year${years > 1 ? "s" : ""}, ${months} month${months > 1 ? "s" : ""}`;
   }
 
   return (
@@ -160,7 +244,7 @@ export default function ReportForm({
       {/* address */}
       <div className="flex flex-col gap-1.5">
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-          Street address <span className="text-umber/50">(optional)</span>
+          Street address (optional)
         </label>
         <input
           name="address"
@@ -172,22 +256,63 @@ export default function ReportForm({
 
       {/* duration + people affected */}
       <div className="grid grid-cols-2 gap-4">
+        {/* month + year picker */}
         <div className="flex flex-col gap-1.5">
           <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-            How long? <span className="text-orange">*</span>
+            When did it start? <span className="text-orange">*</span>
           </label>
+          <div className="grid grid-cols-2 gap-4">
+            <select
+              value={startMonth}
+              onChange={(e) => setStartMonth(e.target.value)}
+              className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark transition-colors"
+            >
+              <option value="" disabled>
+                Month
+              </option>
+              {MONTHS.map((m, i) => (
+                <option key={m} value={String(i + 1).padStart(2, "0")}>
+                  {m}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={startYear}
+              onChange={(e) => setStartYear(e.target.value)}
+              className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark transition-colors"
+            >
+              <option value="" disabled>
+                Year
+              </option>
+              {Array.from({ length: 30 }, (_, i) => {
+                const year = new Date().getFullYear() - i;
+                return (
+                  <option key={year} value={String(year)}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          {startMonth && startYear && (
+            <p className="text-[0.68rem] uppercase tracking-widest text-umber mt-1">
+              Duration: {getDuration(startYear, startMonth)}
+            </p>
+          )}
           <input
+            type="hidden"
             name="duration"
-            type="text"
-            required
-            placeholder="e.g. 3 months, since 2021"
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            value={
+              startMonth && startYear ? getDuration(startYear, startMonth) : ""
+            }
           />
         </div>
 
         <div className="flex flex-col gap-1.5">
           <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-            People affected <span className="text-umber/50">(optional)</span>
+            People affected (optional)
           </label>
           <input
             name="people_affected"
@@ -202,53 +327,53 @@ export default function ReportForm({
       {/* image upload */}
       <div className="flex flex-col gap-1.5">
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-          Photo <span className="text-orange">*</span>
+          Photos <span className="text-orange">*</span> (up to 3, first is the
+          main photo)
         </label>
         <label className="cursor-pointer transition-colors px-4 py-8 flex flex-col items-center gap-2 bg-parch">
           <span className="text-[0.7rem] uppercase tracking-widest text-bark">
-            {imagePreview ? "Change photo" : "Click to upload photo"}
+            {compressing
+              ? "Processing photos..."
+              : imagePreviews.length
+                ? "Change photos"
+                : "Click to upload photos"}
           </span>
-          {imagePreview && (
-            <Image
-              src={imagePreview}
-              alt="Preview"
-              className="mt-2 max-h-40 object-contain"
-            />
+          {imagePreviews.length > 0 && (
+            <div className="flex gap-2 mt-2">
+              {imagePreviews.map((src, i) => (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  key={i}
+                  src={src}
+                  alt={`Preview ${i + 1}`}
+                  className="h-24 w-24 object-cover"
+                />
+              ))}
+            </div>
           )}
           <input
-            name="image"
+            name="images"
             type="file"
             accept="image/*"
-            required
+            multiple
+            disabled={compressing}
             className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) setImagePreview(URL.createObjectURL(file));
-            }}
+            onChange={handleImagesChange}
           />
         </label>
       </div>
 
-      {/* video upload */}
+      {/* video link */}
       <div className="flex flex-col gap-1.5">
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-          Video <span className="text-umber/50">(optional)</span>
+          Video link (optional — paste a YouTube link)
         </label>
-        <label className="cursor-pointer transition-colors px-4 py-6 flex flex-col items-center gap-2 bg-parch">
-          <span className="text-[0.7rem] uppercase tracking-widest text-bark">
-            {videoName ? videoName : "Click to upload video"}
-          </span>
-          <input
-            name="video"
-            type="file"
-            accept="video/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) setVideoName(file.name);
-            }}
-          />
-        </label>
+        <input
+          name="video_link"
+          type="url"
+          placeholder="https://youtube.com/..."
+          className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+        />
       </div>
 
       {error && (
@@ -259,8 +384,8 @@ export default function ReportForm({
 
       <button
         type="submit"
-        disabled={loading}
-        className="bg-orange text-parch text-[0.7rem] uppercase tracking-widest py-4 hover:bg-ember transition-colors disabled:opacity-60 mt-2"
+        disabled={loading || compressing}
+        className="bg-orange text-parch text-[0.7rem] uppercase tracking-widest py-4 hover:bg-ember transition-colors disabled:opacity-60 mt-2 cursor-pointer"
       >
         {loading ? "Submitting..." : "Submit report"}
       </button>
