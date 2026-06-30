@@ -38,7 +38,10 @@ export default async function ReportPage() {
           </h1>
         </div>
 
-        <ReportForm userId={user.id} profile={profile} />
+        <ReportForm
+          userId={user.id}
+          //  profile={profile}
+        />
       </div>
     </main>
   );
