@@ -92,6 +92,14 @@ export async function reportProblem(formData: FormData) {
     if (imageInsertError) {
       return { error: imageInsertError.message };
     }
+
+    // set the main image as the problem's thumbnail
+    if (i === 0) {
+      await supabase
+        .from("problems")
+        .update({ thumbnail_url: urlData.publicUrl })
+        .eq("id", problem.id);
+    }
   }
 
   redirect("/dashboard?reported=true");
