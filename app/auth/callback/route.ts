@@ -15,9 +15,9 @@ export async function GET(request: NextRequest) {
 
     if (!error) {
       // if it's a password recovery, send them to reset page
-      if (type === "recovery") {
-        return NextResponse.redirect(`${origin}/auth/reset-password`);
-      }
+      // if (type === "recovery") {
+      // return NextResponse.redirect(`${origin}/auth/reset-password`);
+      // }
       return NextResponse.redirect(`${origin}${next}`);
     }
   }
