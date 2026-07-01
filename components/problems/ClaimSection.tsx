@@ -74,13 +74,22 @@ export default function ClaimSection({
   if (!isLoggedIn) {
     return (
       <div className="flex flex-col gap-2 border-border border-t pt-5">
-        <h2 className="text-2xl text-orange">Do you want to solve this?</h2>
-        <p className="text-[0.75rem] text-parch leading-relaxed">
-          Solving means taking real responsibility for fixing this — through
-          money, materials, skilled labour, advocacy, or simply connecting the
-          right people to get it done. Once you log in, you can register as a
-          solver, claim this problem to commit to a timeline, and submit proof
-          once it&apos;s resolved.
+        <h2 className="text-2xl text-orange font-bold">
+          Do you want to solve this?
+        </h2>
+        <p className="text-[0.85rem] text-parch leading-relaxed">
+          Solving a problem means taking real responsibility for fixing it,
+          whether that&apos;s through money, materials, skilled labour,
+          advocacy, or connecting the right people to get it done. It&apos;s for
+          anyone who has the means, the network, or the expertise to actually
+          move this from &quot;reported&quot; to &quot;resolved.&quot;
+        </p>
+        <p className="text-[0.85rem] text-parch leading-relaxed">
+          Once you claim this problem, it means you&apos;re publicly committing
+          to fix it within the timeline you set. Other solvers won&apos;t be
+          able to claim it while you&apos;re working on it, and you&apos;ll be
+          expected to submit proof (photos, receipts, or a summary) of what was
+          done once it&apos;s resolved.
         </p>
         <button
           onClick={() =>
@@ -97,33 +106,34 @@ export default function ClaimSection({
   if (!isSolver) {
     return (
       <div className="flex flex-col gap-2 border-border border-t pt-5">
-        <h2 className="text-2xl text-orange">Do you want to solve this?</h2>
-        <p className="text-[0.75rem] text-parch leading-relaxed">
+        <h2 className="text-2xl text-orange font-bold">
+          Do you want to solve this?
+        </h2>
+        <p className="text-[0.85rem] text-parch leading-relaxed">
           Solving a problem means taking real responsibility for fixing it,
           whether that&apos;s through money, materials, skilled labour,
           advocacy, or connecting the right people to get it done. It&apos;s for
           anyone who has the means, the network, or the expertise to actually
           move this from &quot;reported&quot; to &quot;resolved.&quot;
         </p>
-
+        <p className="text-[0.85rem] text-parch leading-relaxed">
+          Once you claim this problem, it means you&apos;re publicly committing
+          to fix it within the timeline you set. Other solvers won&apos;t be
+          able to claim it while you&apos;re working on it, and you&apos;ll be
+          expected to submit proof (photos, receipts, or a summary) of what was
+          done once it&apos;s resolved.
+        </p>
         <button
           onClick={() =>
             router.push(
               `/dashboard/become-a-solver?redirectTo=/problems/${problemId}`,
             )
           }
-          className="mt-2 bg-orange text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-ember transition-colors w-fit"
+          className="bg-orange hover mt-2 flex items-center gap-1 cursor-pointer px-5 py-3 text-[0.8rem] uppercase tracking-wide font-bold transition-colors disabled:opacity-60 w-fit"
+          // className="mt-2 bg-orange text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-ember transition-colors w-fit"
         >
           Become a solver
         </button>
-
-        <p className="text-[0.75rem] text-umber leading-relaxed">
-          Once you register as a solver, claiming this problem means you&apos;re
-          publicly committing to fix it within the timeline you set. Other
-          solvers won&apos;t be able to claim it while you&apos;re working on
-          it, and you&apos;ll be expected to submit proof (photos, receipts, or
-          a summary) of what was done once it&apos;s resolved.
-        </p>
       </div>
     );
   }
@@ -149,19 +159,29 @@ export default function ClaimSection({
   if (!showForm) {
     return (
       <div className="flex flex-col gap-2 border-border border-t pt-5">
-        <p className="text-[0.85rem] text-parch/70">
-          Ready to fix this problem?
+        <h2 className="text-2xl text-orange font-bold">
+          Do you want to solve this?
+        </h2>
+        <p className="text-[0.85rem] text-parch leading-relaxed">
+          Claiming a problem means taking real responsibility for fixing it,
+          whether that&apos;s through money, materials, skilled labour,
+          advocacy, or connecting the right people to get it done. It&apos;s for
+          anyone who has the means, the network, or the expertise to actually
+          move this from &quot;reported&quot; to &quot;resolved.&quot;
+        </p>
+        <p className="text-[0.85rem] text-parch leading-relaxed">
+          Once you claim this problem, it means you&apos;re publicly committing
+          to fix it within the timeline you set. Other solvers won&apos;t be
+          able to claim it while you&apos;re working on it, and you&apos;ll be
+          expected to submit proof (photos, receipts, or a summary) of what was
+          done once it&apos;s resolved.
         </p>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-orange text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-ember transition-colors w-fit"
+          className="mt-1 bg-orange text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-ember transition-colors w-fit"
         >
           Claim this problem
         </button>
-        <p className="text-[0.75rem] text-umber leading-relaxed">
-          Claiming means you&apos;re committing to fix this problem and will
-          submit proof of your solution once it&apos;s done.
-        </p>
       </div>
     );
   }
@@ -169,13 +189,13 @@ export default function ClaimSection({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 border-border border-t pt-5"
+      className="flex flex-col gap-4 bg-surface border-border border p-5"
     >
       <input type="hidden" name="problem_id" value={problemId} />
 
-      <p className="text-[0.7rem] uppercase tracking-widest text-orange">
+      <h2 className="text-2xl font-bold text-orange">
         Claim this problem
-      </p>
+      </h2>
 
       <div className="flex flex-col gap-1.5">
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
@@ -209,7 +229,7 @@ export default function ClaimSection({
         </p>
       )}
 
-      <div className="flex gap-3">
+      <div className="flex gap-0 justify-between">
         <button
           type="submit"
           disabled={loading}
@@ -220,7 +240,7 @@ export default function ClaimSection({
         <button
           type="button"
           onClick={() => setShowForm(false)}
-          className="text-[0.75rem] uppercase tracking-wide font-bold text-umber hover:text-parch transition-colors"
+          className="bg-bark text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-surface border border-border transition-colors"
         >
           Cancel
         </button>

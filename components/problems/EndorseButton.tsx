@@ -45,16 +45,14 @@ export default function EndorseButton({
 
   return (
     <div className="flex flex-col gap-2 border-border border-t pt-5">
-      <h2 className="text-2xl text-orange">Relatable?</h2>
-      <p className="text-[0.75rem] text-parch leading-relaxed">
+      <h2 className="text-2xl text-orange font-bold">Relatable?</h2>
+      <p className="text-[0.85rem] text-parch leading-relaxed">
         Endorsing is how the community confirms a problem is real and matters.
         If you live nearby, have seen this issue yourself, or know it&apos;s
         genuinely affecting people, your endorsement helps move it up the
         priority list and shows solvers it&apos;s worth their time. It is not a
         vote of agreement with how it was described, but just a confirmation
         that the problem itself is real.
-        {endorsed &&
-          " You've already endorsed this — click the button again to remove it."}
       </p>
       <button
         onClick={handleClick}
@@ -68,6 +66,17 @@ export default function EndorseButton({
         <BiSolidUpvote className="-mt-1" />
         {endorsed ? "Remove endorsement" : "Endorse this problem"} ({count})
       </button>
+      {endorsed && (
+        <span className="text-[0.8rem] text-umber">
+          You&apos;ve already endorsed this. click the button again to remove
+          it.
+        </span>
+      )}
+      {!isLoggedIn && (
+        <span className="text-[0.8rem] text-umber">
+          You need to be logged in to make an endorsement
+        </span>
+      )}
     </div>
   );
 }

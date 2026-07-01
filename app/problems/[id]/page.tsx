@@ -106,14 +106,14 @@ export default async function ProblemDetailPage({
             </p>
           </div>
 
-          <h1 className=" text-3xl md:text-4xl text-parch leading-tight">
+          <h1 className="font-playfair text-3xl md:text-4xl text-parch leading-tight">
             {problem.heading}
           </h1>
           <div className="sm:block md:flex md:items-center md:gap-2">
-            <p className="text-[0.7rem] uppercase tracking-widest text-umber sm:mb-1">
+            <p className="text-[0.7rem] uppercase tracking-widest text-umber">
               Started {problem.duration} ago
             </p>
-            <span className="hidden md:inline text-umber">|</span>
+            <span className="hidden md:inline text-parch font-bold ">&middot;</span>
             <p className="text-[0.7rem] uppercase tracking-widest text-umber">
               Category: {problem.category}
             </p>
@@ -127,7 +127,7 @@ export default async function ProblemDetailPage({
         <div className="flex flex-col gap-2 border-t border-border pt-6">
           <p className="text-[0.85rem] text-parch">
             <span className="">Location:</span>
-            {problem.address && ` ${problem.address}, `} 
+            {problem.address && ` ${problem.address}, `}
             {problem.lga}, {problem.state}
           </p>
           {problem.people_affected && (
