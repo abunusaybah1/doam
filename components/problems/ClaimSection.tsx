@@ -186,7 +186,7 @@ export default function ClaimSection({
           required
           rows={3}
           placeholder="How do you intend to solve this problem?"
-          className="bg-parch border-2 border-parch outline-none px-4 py-3 font-lora text-[.9rem] text-bark placeholder:text-warm transition-colors resize-none"
+          className="bg-parch border-2 border-parch outline-none px-4 py-3   text-[.9rem] text-bark placeholder:text-warm transition-colors resize-none"
         />
       </div>
 
@@ -199,7 +199,7 @@ export default function ClaimSection({
           type="text"
           required
           placeholder="e.g. 2 weeks, by end of month"
-          className="bg-parch border-2 border-parch outline-none px-4 py-3 font-lora text-[.9rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch outline-none px-4 py-3   text-[.9rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 

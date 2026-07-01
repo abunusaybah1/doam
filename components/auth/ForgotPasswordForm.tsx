@@ -62,7 +62,7 @@ export default function ForgotPasswordForm({ urlError }: Props) {
   return (
     <main className="min-h-screen bg-bark flex items-center justify-center px-6">
       <div className="w-full max-w-md">
-        <h1 className="font-playfair text-3xl md:text-4xl text-parch mb-2">
+        <h1 className=" text-3xl md:text-4xl text-parch mb-2">
           Reset your password
         </h1>
 
@@ -93,7 +93,7 @@ export default function ForgotPasswordForm({ urlError }: Props) {
               type="email"
               required
               placeholder="you@email.com"
-              className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+              className="bg-parch border-2 border-parch outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
             />
           </div>
 

@@ -59,7 +59,7 @@ export default function ResetPasswordForm() {
           placeholder="Min. 8 characters"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -74,7 +74,7 @@ export default function ResetPasswordForm() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           onKeyUp={verifyPassword}
-          className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 

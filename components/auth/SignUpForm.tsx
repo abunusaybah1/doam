@@ -62,15 +62,15 @@ const SignUpForm = () => {
     return (
       <div className="flex flex-col gap-4">
         <div className="border-l-2 border-orange pl-4 py-1">
-          <p className="font-barlow font-bold text-[.78rem] tracking-[.12em] uppercase text-orange mb-1">
+          <p className="  font-bold text-[.78rem] tracking-[.12em] uppercase text-orange mb-1">
             Check your email
           </p>
-          <p className="font-lora text-[.92rem] text-parch/70 leading-relaxed">
+          <p className="  text-[.92rem] text-parch/70 leading-relaxed">
             We sent a confirmation link to <strong>{email}</strong>. Click it to
             activate your account.
           </p>
         </div>
-        <p className="font-barlow text-[.75rem] tracking-wide text-parch/70">
+        <p className="  text-[.75rem] tracking-wide text-parch/70">
           Wrong email?{" "}
           <button
             onClick={() => {
@@ -90,7 +90,7 @@ const SignUpForm = () => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="flex gap-3">
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="font-barlow font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
+          <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
             First name
           </label>
           <input
@@ -100,11 +100,11 @@ const SignUpForm = () => {
             placeholder="Abdulmatiin"
             value={fName}
             onChange={(e) => setFName(e.target.value)}
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           />
         </div>
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="font-barlow font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
+          <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
             Last name
           </label>
           <input
@@ -114,13 +114,13 @@ const SignUpForm = () => {
             placeholder="Ismail"
             value={lName}
             onChange={(e) => setLName(e.target.value)}
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           />
         </div>
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label className="font-barlow font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
+        <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
           Email address
         </label>
         <input
@@ -130,12 +130,12 @@ const SignUpForm = () => {
           placeholder="you@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label className="font-barlow font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
+        <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
           Password
         </label>
         <input
@@ -146,12 +146,12 @@ const SignUpForm = () => {
           placeholder="Min. 8 characters"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label className="font-barlow font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
+        <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
           Confirm password
         </label>
         <input
@@ -163,12 +163,12 @@ const SignUpForm = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           onKeyUp={verifyPassword}
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
       {error && (
-        <p className="font-barlow text-[.78rem] tracking-wide text-red-500 border-l-2 border-red-500 pl-3">
+        <p className="  text-[.78rem] tracking-wide text-red-500 border-l-2 border-red-500 pl-3">
           {error}
         </p>
       )}
@@ -176,12 +176,12 @@ const SignUpForm = () => {
       <button
         type="submit"
         disabled={loading || !!error}
-        className="font-barlow font-bold text-[.9rem] tracking-[.08em] uppercase bg-orange text-white py-4 border-2 border-orange hover:bg-ember hover:border-ember transition-all disabled:opacity-60 mt-2"
+        className="  font-bold text-[.9rem] tracking-[.08em] uppercase bg-orange text-white py-4 border-2 border-orange hover:bg-ember hover:border-ember transition-all disabled:opacity-60 mt-2"
       >
         {loading ? "Creating account..." : "Create account"}
       </button>
 
-      <p className="font-barlow text-[.75rem] tracking-wide text-umber text-center">
+      <p className="  text-[.75rem] tracking-wide text-umber text-center">
         Already have an account?{" "}
         <Link
           href="/auth/login"

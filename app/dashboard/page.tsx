@@ -53,7 +53,7 @@ export default async function DashboardPage() {
           <p className="text-[0.7rem] uppercase tracking-widest text-umber mb-1">
             Welcome back
           </p>
-          <h1 className="font-playfair text-3xl md:text-4xl text-parch">
+          <h1 className=" text-3xl md:text-4xl text-parch">
             {profile?.full_name ?? user.email}
           </h1>
           {/* <p>{profile?.id}</p> */}
@@ -72,7 +72,7 @@ export default async function DashboardPage() {
         {/* my reported problems */}
         <section className="mt-12">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-playfair text-xl text-parch">
+            <h2 className=" text-xl text-parch">
               My reported problems
             </h2>
             <a
@@ -87,7 +87,7 @@ export default async function DashboardPage() {
 
         {/* all problems */}
         <section className="mt-12">
-          <h2 className="font-playfair text-xl text-parch mb-6">
+          <h2 className=" text-xl text-parch mb-6">
             All reported problems
           </h2>
           <AllProblems problems={allProblems ?? []} followedIds={followedIds} />

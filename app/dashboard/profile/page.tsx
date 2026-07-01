@@ -30,7 +30,7 @@ export default async function ProfilePage({
           <p className="text-[0.7rem] uppercase tracking-widest text-umber mb-1">
             Account
           </p>
-          <h1 className="font-playfair text-3xl md:text-4xl text-parch">
+          <h1 className=" text-3xl md:text-4xl text-parch">
             Your profile
           </h1>
         </div>

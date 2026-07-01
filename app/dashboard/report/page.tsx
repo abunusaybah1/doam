@@ -33,7 +33,7 @@ export default async function ReportPage() {
           <p className="text-[0.7rem] uppercase tracking-widest text-umber mb-1">
             New report
           </p>
-          <h1 className="font-playfair text-3xl md:text-4xl text-parch">
+          <h1 className=" text-3xl md:text-4xl text-parch">
             Report a problem
           </h1>
         </div>

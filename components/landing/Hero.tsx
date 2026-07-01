@@ -11,7 +11,7 @@ export default function Hero() {
      px-5 pt-10 pb-8 md:px-10 md:pt-20 md:pb-14 lg:flex lg:gap-16 lg:items-center"
     >
       <div className="lg:w-fit max-w-220">
-        <h1 className="font-playfair text-[2.4rem] sm:text-[3rem] lg:text-[3.6rem] font-black leading-[1.05] mb-5 text-parch">
+        <h1 className=" text-[2.4rem] sm:text-[3rem] lg:text-[3.6rem] font-black leading-[1.05] mb-5 text-parch">
           Your community&apos;s problems,{" "}
           <em className="italic text-orange">documented.</em>
         </h1>
@@ -72,7 +72,7 @@ export default function Hero() {
               key={s.label}
               className=" flex-1 min-w-[calc(33.333%-1px)] bg-surface py-4 px-2 text-center"
             >
-              <p className="font-playfair text-[1.5rem] sm:text-[1.8rem] font-black text-orange">
+              <p className=" text-[1.5rem] sm:text-[1.8rem] font-black text-orange">
                 {s.num}
               </p>
               <p className="text-[0.58rem] uppercase tracking-[0.08em] text-umber mt-1 leading-tight">

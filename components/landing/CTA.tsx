@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function CtaBand() {
   return (
     <section className="bg-orange px-5 py-16 md:px-10 md:py-20 text-center">
-      <h2 className="font-playfair text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-black text-parch leading-[1.1] mb-4">
+      <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-black text-parch leading-[1.1] mb-4">
         Something wrong in your community or you want to explore reported
         problems?
       </h2>

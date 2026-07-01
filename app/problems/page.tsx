@@ -31,11 +31,11 @@ export default async function ProblemsPage() {
       <div className="px-6 md:px-10 py-10">
         <div className="mb-10 flex items-end justify-between flex-wrap gap-4">
           <div>
-            <p className="font-barlow font-bold text-[.7rem] tracking-[.2em] uppercase text-ember mb-2">
+            <p className="  font-bold text-[.7rem] tracking-[.2em] uppercase text-ember mb-2">
               Real problems, Real Impact...
             </p>
             <h1
-              className="font-playfair font-black leading-[.92] text-cream sm:w-full md:w-[80%] lg:w-[60%]"
+              className=" font-black leading-[.92] text-cream sm:w-full md:w-[80%] lg:w-[60%]"
               style={{ fontSize: "clamp(2.4rem,4.5vw,4rem)" }}
             >
               Problems waiting for who will Do.Am
@@ -107,7 +107,7 @@ export default async function ProblemsPage() {
                   </p>
                 </div>
 
-                <h3 className="font-playfair text-xl text-parch leading-snug">
+                <h3 className=" text-xl text-parch leading-snug">
                   {problem.heading}
                 </h3>
 

@@ -10,7 +10,7 @@ export default function HowItWorks() {
       <div className="flex flex-col md:flex-row gap-px bg-border">
         {steps.map((s) => (
           <div key={s.num} className="bg-bark flex-1 p-7 md:p-8">
-            <p className="font-playfair text-[2.5rem] font-black text-border mb-3 leading-none">
+            <p className=" text-[2.5rem] font-black text-border mb-3 leading-none">
               {s.num}
             </p>
             <h3 className="text-[0.85rem] font-medium tracking-[0.04em] text-parch mb-3">

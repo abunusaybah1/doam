@@ -13,7 +13,7 @@ export default function Roles() {
             <span className="inline-block border border-orange text-orange text-[0.6rem] uppercase tracking-[0.18em] px-2 py-1 mb-5">
               {r.tag}
             </span>
-            <h3 className="font-playfair text-[1.7rem] sm:text-[2rem] font-bold leading-[1.2] mb-4">
+            <h3 className=" text-[1.7rem] sm:text-[2rem] font-bold leading-[1.2] mb-4">
               {r.title}
             </h3>
             <p className="font-serif-body font-light text-[0.8rem] leading-[1.9] text-[#f5f5dc]/55">

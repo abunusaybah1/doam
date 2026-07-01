@@ -10,16 +10,16 @@ export default function SampleProblems() {
     <section className="py-6 ">
       <div className="px-6 md:px-6 lg:px-10">
         <div className=" flex flex-col gap-6">
-          <p className="font-barlow font-bold text-[.7rem] tracking-[.2em] uppercase text-ember -mb-5">
+          <p className="  font-bold text-[.7rem] tracking-[.2em] uppercase text-ember -mb-5">
             Real problems, Real people...
           </p>
           <h2
-            className="font-playfair font-black leading-[.92] text-cream"
+            className=" font-black leading-[.92] text-cream"
             style={{ fontSize: "clamp(2.8rem,5.5vw,5rem)" }}
           >
             This is what we&apos;re fixing.
           </h2>
-          <p className="font-lora text-[.95rem] leading-relaxed max-w-[80vw]">
+          <p className="  text-[.95rem] leading-relaxed max-w-[80vw]">
             These aren&apos;t statistics. These are people&apos;s daily
             realities... and they&apos;re waiting for someone to DoAm.
           </p>

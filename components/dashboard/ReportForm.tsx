@@ -130,7 +130,7 @@ export default function ReportForm({
           type="text"
           required
           placeholder="Short title describing the problem"
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -144,7 +144,7 @@ export default function ReportForm({
           required
           rows={5}
           placeholder="Describe the problem in detail — what is happening, how long has it been going on, what has been tried..."
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors resize-none"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors resize-none"
         />
       </div>
 
@@ -158,7 +158,7 @@ export default function ReportForm({
             name="category"
             required
             defaultValue="select"
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
             <option value="select" disabled>
               Select category
@@ -179,7 +179,7 @@ export default function ReportForm({
             name="condition"
             required
             defaultValue="select"
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
             <option value="select" disabled>
               How severe?
@@ -204,7 +204,7 @@ export default function ReportForm({
             onChange={(e) => {
               setSelectedState(e.target.value);
             }}
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
             <option value="" disabled>
               {locationLoading ? "Loading states..." : "Select state"}
@@ -226,7 +226,7 @@ export default function ReportForm({
             required
             defaultValue="select"
             disabled={!selectedState}
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
             <option value="select" disabled>
               {!selectedState ? "Select state first" : "Select LGA"}
@@ -249,7 +249,7 @@ export default function ReportForm({
           name="address"
           type="text"
           placeholder="Specific street or landmark"
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -264,7 +264,7 @@ export default function ReportForm({
             <select
               value={startMonth}
               onChange={(e) => setStartMonth(e.target.value)}
-              className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark transition-colors"
+              className="bg-parch border-2 border-parch outline-none px-4 py-3.5   text-[.95rem] text-bark transition-colors"
             >
               <option value="" disabled>
                 Month
@@ -279,7 +279,7 @@ export default function ReportForm({
             <select
               value={startYear}
               onChange={(e) => setStartYear(e.target.value)}
-              className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark transition-colors"
+              className="bg-parch border-2 border-parch outline-none px-4 py-3.5   text-[.95rem] text-bark transition-colors"
             >
               <option value="" disabled>
                 Year
@@ -318,7 +318,7 @@ export default function ReportForm({
             type="number"
             min={1}
             placeholder="Estimated number"
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           />
         </div>
       </div>
@@ -371,7 +371,7 @@ export default function ReportForm({
           name="video_link"
           type="url"
           placeholder="https://youtube.com/..."
-          className="bg-parch border-2 border-parch outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 

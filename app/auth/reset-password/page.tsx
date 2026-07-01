@@ -14,7 +14,7 @@ export default async function ResetPasswordPage() {
   return (
     <main className="min-h-screen bg-bark flex items-center justify-center px-6">
       <div className="w-full max-w-md">
-        <h1 className="font-playfair text-3xl md:text-4xl text-parch mb-2">
+        <h1 className=" text-3xl md:text-4xl text-parch mb-2">
           Set new password
         </h1>
         <p className="text-parch/50 text-sm mb-8">

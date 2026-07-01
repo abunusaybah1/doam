@@ -6,8 +6,6 @@ import Image from "next/image";
 import { NigeriaStatesAndLGAs } from "@/hooks/NigeriaStatesAndLGAs";
 import { Profile } from "@/types";
 
-
-
 export default function ProfileForm({
   profile,
   // userId,
@@ -103,7 +101,7 @@ export default function ProfileForm({
           required
           placeholder="Full name"
           defaultValue={profile?.full_name ?? ""}
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -118,7 +116,7 @@ export default function ProfileForm({
           required
           defaultValue={profile?.username ?? ""}
           placeholder="e.g. amina_bello"
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -133,7 +131,7 @@ export default function ProfileForm({
           required
           defaultValue={profile?.phone ?? ""}
           placeholder="080xxxxxxxx"
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 
@@ -150,12 +148,12 @@ export default function ProfileForm({
             onChange={(e) => {
               setSelectedState(e.target.value);
             }}
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
             <option value="" disabled>
               {locationLoading ? "Loading states..." : "Select state"}
             </option>
-            {locationData.map((s,i) => (
+            {locationData.map((s, i) => (
               <option key={i} value={s.state}>
                 {s.state}
               </option>
@@ -172,7 +170,7 @@ export default function ProfileForm({
             required
             defaultValue={profile?.lga ?? ""}
             disabled={!selectedState}
-            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors"
+            className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
           >
             <option value="" disabled>
               {!selectedState ? "Select state first" : "Select LGA"}
@@ -196,7 +194,7 @@ export default function ProfileForm({
           rows={3}
           defaultValue={profile?.bio ?? ""}
           placeholder="A short description about yourself"
-          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5 font-lora text-[.95rem] text-bark placeholder:text-warm transition-colors resize-none"
+          className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors resize-none"
         />
       </div>
 

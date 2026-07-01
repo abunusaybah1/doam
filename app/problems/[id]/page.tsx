@@ -106,7 +106,7 @@ export default async function ProblemDetailPage({
             </p>
           </div>
 
-          <h1 className="font-playfair text-3xl md:text-4xl text-parch leading-tight">
+          <h1 className=" text-3xl md:text-4xl text-parch leading-tight">
             {problem.heading}
           </h1>
           <div className="sm:block md:flex md:items-center md:gap-2">
