@@ -69,3 +69,45 @@ export async function claimProblem(formData: FormData) {
   revalidatePath(`/problems/${problem_id}`);
   return { success: true };
 }
+
+export async function unclaimProblem(formData: FormData) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const claim_id = formData.get("claim_id") as string;
+  const reason = formData.get("reason") as string;
+
+  if (!reason || reason.trim().length < 5) {
+    return { error: "Please give a short reason for unclaiming" };
+  }
+
+  const { data: claim } = await supabase
+    .from("claims")
+    .select("id, solver_id, problem_id, status")
+    .eq("id", claim_id)
+    .single();
+
+  if (!claim) return { error: "Claim not found" };
+  if (claim.solver_id !== user.id) return { error: "This isn't your claim" };
+  if (claim.status !== "active")
+    return { error: "This claim is no longer active" };
+
+  const { error } = await supabase
+    .from("claims")
+    .update({
+      status: "abandoned",
+      abandoned_at: new Date().toISOString(),
+      abandon_reason: reason,
+    })
+    .eq("id", claim_id);
+
+  if (error) return { error: error.message };
+
+  revalidatePath(`/problems/${claim.problem_id}`);
+  revalidatePath("/problems");
+  return { success: true };
+}

@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { claimProblem } from "@/app/problems/[id]/claim-actions";
+import {
+  claimProblem,
+  unclaimProblem,
+} from "@/app/problems/[id]/claim-actions";
 
 type Claim = {
   id: string;
@@ -30,6 +33,9 @@ export default function ClaimSection({
   const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showUnclaimForm, setShowUnclaimForm] = useState(false);
+  const [unclaimError, setUnclaimError] = useState("");
+  const [unclaimLoading, setUnclaimLoading] = useState(false);
   const router = useRouter();
 
   if (problemStatus === "completed") {
@@ -56,8 +62,26 @@ export default function ClaimSection({
   }
 
   if (activeClaim && activeClaim.solver_id === currentUserId) {
+    async function handleUnclaim(e: React.FormEvent<HTMLFormElement>) {
+      e.preventDefault();
+      setUnclaimLoading(true);
+      setUnclaimError("");
+
+      const formData = new FormData(e.currentTarget);
+      const result = await unclaimProblem(formData);
+
+      setUnclaimLoading(false);
+
+      if (result?.error) {
+        setUnclaimError(result.error);
+        return;
+      }
+
+      router.refresh();
+    }
+
     return (
-      <div className="flex flex-col gap-2 border-border border-t pt-5">
+      <div className="flex flex-col gap-3 border-border border-t pt-5">
         <p className="text-[0.7rem] uppercase tracking-widest text-orange">
           You&apos;re solving this
         </p>
@@ -67,6 +91,54 @@ export default function ClaimSection({
         <p className="text-[0.85rem] text-parch/80">
           <span className="text-umber">Timeline:</span> {activeClaim.timeline}
         </p>
+
+        {!showUnclaimForm ? (
+          <button
+            onClick={() => setShowUnclaimForm(true)}
+            className="text-[0.75rem] uppercase tracking-wide font-bold text-red-500 hover:text-red-400 transition-colors w-fit mt-1"
+          >
+            Unclaim this problem
+          </button>
+        ) : (
+          <form onSubmit={handleUnclaim} className="flex flex-col gap-3 mt-1">
+            <input type="hidden" name="claim_id" value={activeClaim.id} />
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[0.68rem] uppercase tracking-widest text-umber">
+                Why are you unclaiming this?
+              </label>
+              <textarea
+                name="reason"
+                required
+                rows={2}
+                placeholder="e.g. I no longer have the resources to complete this"
+                className="bg-parch border-2 border-parch outline-none px-4 py-3 text-[.9rem] text-bark placeholder:text-warm transition-colors resize-none"
+              />
+            </div>
+
+            {unclaimError && (
+              <p className="text-[0.78rem] text-red-500 border-l-2 border-red-500 pl-3">
+                {unclaimError}
+              </p>
+            )}
+
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={unclaimLoading}
+                className="bg-red-500 text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-red-600 transition-colors disabled:opacity-60"
+              >
+                {unclaimLoading ? "Submitting..." : "Confirm unclaim"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowUnclaimForm(false)}
+                className="bg-bark text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-surface border border-border transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     );
   }
@@ -125,12 +197,9 @@ export default function ClaimSection({
         </p>
         <button
           onClick={() =>
-            router.push(
-              `/dashboard/become-a-solver?redirectTo=/problems/${problemId}`,
-            )
+            router.push(`/dashboard/ solver?redirectTo=/problems/${problemId}`)
           }
-          className="bg-orange hover mt-2 flex items-center gap-1 cursor-pointer px-5 py-3 text-[0.8rem] uppercase tracking-wide font-bold transition-colors disabled:opacity-60 w-fit"
-          // className="mt-2 bg-orange text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-ember transition-colors w-fit"
+          className="mt-2 bg-orange text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-3 hover:bg-ember transition-colors w-fit"
         >
           Become a solver
         </button>
@@ -193,9 +262,7 @@ export default function ClaimSection({
     >
       <input type="hidden" name="problem_id" value={problemId} />
 
-      <h2 className="text-2xl font-bold text-orange">
-        Claim this problem
-      </h2>
+      <h2 className="text-2xl font-bold text-orange">Claim this problem</h2>
 
       <div className="flex flex-col gap-1.5">
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
@@ -206,7 +273,7 @@ export default function ClaimSection({
           required
           rows={3}
           placeholder="How do you intend to solve this problem?"
-          className="bg-parch border-2 border-parch outline-none px-4 py-3   text-[.9rem] text-bark placeholder:text-warm transition-colors resize-none"
+          className="bg-parch border-2 border-parch outline-none px-4 py-3 text-[.9rem] text-bark placeholder:text-warm transition-colors resize-none"
         />
       </div>
 
@@ -219,7 +286,7 @@ export default function ClaimSection({
           type="text"
           required
           placeholder="e.g. 2 weeks, by end of month"
-          className="bg-parch border-2 border-parch outline-none px-4 py-3   text-[.9rem] text-bark placeholder:text-warm transition-colors"
+          className="bg-parch border-2 border-parch outline-none px-4 py-3 text-[.9rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
 

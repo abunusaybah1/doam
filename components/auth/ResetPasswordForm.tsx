@@ -9,6 +9,8 @@ export default function ResetPasswordForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
 
   const verifyPassword = () => {
@@ -53,7 +55,7 @@ export default function ResetPasswordForm() {
           New password
         </label>
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           required
           minLength={8}
           placeholder="Min. 8 characters"
@@ -68,7 +70,7 @@ export default function ResetPasswordForm() {
           Confirm password
         </label>
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           required
           placeholder="Repeat your password"
           value={confirmPassword}
@@ -77,7 +79,18 @@ export default function ResetPasswordForm() {
           className="bg-parch border-2 border-parch outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
       </div>
-
+      <div className="flex items-center gap-1">
+        <input
+          type="checkbox"
+          checked={showPassword}
+          onChange={() => setShowPassword(!showPassword)}
+          id="showHide"
+          className="mt-2 self-start accent-orange size-4"
+        />
+        <label htmlFor="showHide" className="mt-1 select-none">
+          Show password
+        </label>
+      </div>
       {error && (
         <p className="text-[0.78rem] text-red-500 border-l-2 border-red-500 pl-3">
           {error}
