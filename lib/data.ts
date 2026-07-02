@@ -127,3 +127,18 @@ export const MONTHS = [
   "November",
   "December",
 ];
+
+export const navMenuNonUser = [
+  { name: "Home", href: "/" },
+  // { name: "About", href: "/about" },
+  { name: "How it works", href: "/how-it-works" },
+  { name: "Problems", href: "/problems" },
+  { name: "Contact us", href: "/contact-us" },
+];
+
+export const navMenuUser = [
+  { name: "Dashboard", href: "/dashboard" },
+  // { name: "Profile", href: "/dashboard/profile" },
+  { name: "Problems", href: "/problems" },
+  { name: "Contact us", href: "/contact-us" },
+];
