@@ -4,11 +4,31 @@ import Link from "next/link";
 import MyProblems from "@/components/dashboard/MyProblems";
 
 const STATUS_TABS = [
-  { label: "All", value: null },
-  { label: "Pending", value: "pending" },
-  { label: "Active", value: "active" },
-  { label: "In progress", value: "in_progress" },
-  { label: "Completed", value: "completed" },
+  {
+    label: "All",
+    value: null,
+    emptyMessage: "You haven't reported any problems yet.",
+  },
+  {
+    label: "Pending",
+    value: "pending",
+    emptyMessage: "No problems pending review.",
+  },
+  {
+    label: "Active",
+    value: "active",
+    emptyMessage: "No active problems right now.",
+  },
+  {
+    label: "In progress",
+    value: "in_progress",
+    emptyMessage: "No problems in progress right now.",
+  },
+  {
+    label: "Completed",
+    value: "completed",
+    emptyMessage: "No completed problems yet.",
+  },
 ];
 
 export default async function MyReportedProblemsPage({
@@ -24,6 +44,8 @@ export default async function MyReportedProblemsPage({
   if (!user) redirect("/auth/login");
 
   const { status } = await searchParams;
+  const activeTab =
+    STATUS_TABS.find((t) => t.value === status) ?? STATUS_TABS[0];
 
   let query = supabase
     .from("problems")
@@ -33,14 +55,14 @@ export default async function MyReportedProblemsPage({
     .eq("reporter_id", user.id)
     .order("created_at", { ascending: false });
 
-  if (status) {
-    query = query.eq("status", status);
+  if (activeTab.value) {
+    query = query.eq("status", activeTab.value);
   }
 
   const { data: problems } = await query;
 
   return (
-    <main className="min-h-screen bg-bark">
+    <main className="min-h-screen bg-bark p-0 m-0">
       <div className="max-w-4xl mx-auto px-5 md:px-10 py-10">
         <div className="mb-8 border-b border-border pb-8">
           <Link
@@ -59,7 +81,7 @@ export default async function MyReportedProblemsPage({
             const href = tab.value
               ? `/dashboard/my-problems?status=${tab.value}`
               : "/dashboard/my-problems";
-            const isActive = status === tab.value || (!status && !tab.value);
+            const isActive = activeTab.value === tab.value;
             return (
               <Link
                 key={tab.label}
@@ -76,7 +98,11 @@ export default async function MyReportedProblemsPage({
           })}
         </div>
 
-        <MyProblems problems={problems ?? []} />
+        {!problems?.length ? (
+          <p className="text-parch/50 text-sm">{activeTab.emptyMessage}</p>
+        ) : (
+          <MyProblems problems={problems} />
+        )}
       </div>
     </main>
   );

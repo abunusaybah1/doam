@@ -1,4 +1,5 @@
 import { steps } from "@/lib/data";
+import Link from "next/dist/client/link";
 
 export default function HowItWorks() {
   return (
@@ -21,6 +22,14 @@ export default function HowItWorks() {
             </p>
           </div>
         ))}
+      </div>{" "}
+      <div className="mt-10 text-center">
+        <Link
+          href="/how-it-works"
+          className="text-[0.72rem] uppercase tracking-widest font-bold bg-surface p-3 border border-border hover:bg-bark hover:border-orange text-orange hover:text-ember transition-colors"
+        >
+          Read more...
+        </Link>
       </div>
     </section>
   );
