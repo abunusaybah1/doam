@@ -5,25 +5,41 @@ import { GrLocation } from "react-icons/gr";
 import { BiSolidUpvote } from "react-icons/bi";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-export default async function ProblemsPage() {
+export default async function ProblemsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ filter?: string }>;
+}) {
   const supabase = await createClient();
+  const { filter } = await searchParams;
+  const activeFilter =
+    filter === "in_progress" || filter === "completed" ? filter : "all";
+
+  const statusQuery =
+    activeFilter === "in_progress"
+      ? ["in_progress"]
+      : activeFilter === "completed"
+        ? ["completed"]
+        : ["active", "in_progress"];
 
   const { data: problems } = await supabase
     .from("problems")
     .select(
       "id, heading, description, category, condition, state, lga, endorsement_count, thumbnail_url, status",
     )
-    .in("status", ["active", "in_progress"])
+    .in("status", statusQuery)
     .order("created_at", { ascending: false });
 
   const statusLabel: Record<string, string> = {
     active: "Available",
     in_progress: "In progress",
+    completed: "Solved",
   };
 
   const statusColor: Record<string, string> = {
     active: "bg-blue-600",
     in_progress: "bg-amber-500",
+    completed: "bg-green-600",
   };
 
   return (

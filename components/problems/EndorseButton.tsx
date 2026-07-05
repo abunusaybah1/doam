@@ -4,6 +4,7 @@ import { useState } from "react";
 import { BiSolidUpvote } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import { toggleEndorsement } from "@/app/problems/[id]/endorse-actions";
+import { error } from "console";
 
 export default function EndorseButton({
   problemId,

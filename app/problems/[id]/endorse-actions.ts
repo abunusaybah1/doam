@@ -11,6 +11,15 @@ export async function toggleEndorsement(problemId: string) {
   } = await supabase.auth.getUser();
   if (!user) return { error: "You need to be logged in to endorse" };
 
+  const { data: problem } = await supabase
+    .from("problems")
+    .select("reporter_id")
+    .eq("id", problemId)
+    .single();
+
+  if (problem?.reporter_id === user.id) {
+    return { error: "You can't endorse your own report." };
+  }
   const { data: existing } = await supabase
     .from("problem_endorsements")
     .select("id")

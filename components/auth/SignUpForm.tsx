@@ -3,6 +3,7 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
   const [loading, setLoading] = React.useState(false);
@@ -13,6 +14,8 @@ const SignUpForm = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const router = useRouter();
 
   const verifyPassword = () => {
     if (confirmPassword && password !== confirmPassword) {
@@ -34,7 +37,7 @@ const SignUpForm = () => {
 
     const supabase = createClient();
 
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -47,9 +50,15 @@ const SignUpForm = () => {
     if (signUpError) {
       setError(signUpError.message);
       setLoading(false);
-      setTimeout(() => {
-        setError("");
-      }, 5000);
+      setTimeout(() => setError(""), 5000);
+      return;
+    }
+
+    // if email confirmation is off, Supabase returns an active session immediately —
+    // the account is already logged in, so skip the "check your email" screen entirely
+    if (data.session) {
+      router.push("/dashboard");
+      router.refresh();
       return;
     }
 
@@ -140,7 +149,7 @@ const SignUpForm = () => {
         </label>
         <input
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           required
           minLength={8}
           placeholder="Min. 8 characters"
@@ -156,7 +165,7 @@ const SignUpForm = () => {
         </label>
         <input
           name="confirmPassword"
-          type="password"
+          type={showPassword ? "text" : "password"}
           required
           minLength={8}
           placeholder="Retype your password"
@@ -165,6 +174,18 @@ const SignUpForm = () => {
           onKeyUp={verifyPassword}
           className="bg-parch border-2 border-parch  outline-none px-4 py-3.5   text-[.95rem] text-bark placeholder:text-warm transition-colors"
         />
+      </div>
+      <div className="flex items-center gap-1">
+        <input
+          type="checkbox"
+          checked={showPassword}
+          onChange={() => setShowPassword(!showPassword)}
+          id="showHide"
+          className="mt-2 self-start accent-orange size-4"
+        />
+        <label htmlFor="showHide" className="mt-1 select-none">
+          Show password
+        </label>
       </div>
 
       {error && (

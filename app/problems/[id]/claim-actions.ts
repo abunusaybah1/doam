@@ -17,7 +17,17 @@ export async function claimProblem(formData: FormData) {
   const timeline = formData.get("timeline") as string;
 
   if (!plan || !timeline) {
-    return { error: "Plan and timeline are required" };
+    return { error: "Plan and target completion date are required" };
+  }
+
+  const { data: problem } = await supabase
+    .from("problems")
+    .select("status")
+    .eq("id", problem_id)
+    .single();
+
+  if (!problem || problem.status !== "active") {
+    return { error: "This problem isn't currently available to claim." };
   }
 
   const { data: profile } = await supabase
@@ -45,11 +55,11 @@ export async function claimProblem(formData: FormData) {
     .from("claims")
     .select("id")
     .eq("problem_id", problem_id)
-    .eq("status", "active")
+    .in("status", ["active", "pending_approval"])
     .maybeSingle();
 
   if (existingClaim) {
-    return { error: "This problem already has an active solver" };
+    return { error: "This problem already has a solver claim in progress" };
   }
 
   const { error: insertError } = await supabase.from("claims").insert({
@@ -57,16 +67,16 @@ export async function claimProblem(formData: FormData) {
     solver_id: user.id,
     plan,
     timeline,
+    status: "pending_approval",
   });
 
   if (insertError) {
-    if (insertError.code === "23505") {
-      return { error: "This problem already has an active solver" };
-    }
-    return { error: insertError.message };
+    return { error: `Could not submit your claim: ${insertError.message}` };
   }
 
+  // problem stays "active" and publicly visible until an admin approves the claim
   revalidatePath(`/problems/${problem_id}`);
+  revalidatePath("/dashboard/solver");
   return { success: true };
 }
 
@@ -93,8 +103,15 @@ export async function unclaimProblem(formData: FormData) {
 
   if (!claim) return { error: "Claim not found" };
   if (claim.solver_id !== user.id) return { error: "This isn't your claim" };
-  if (claim.status !== "active")
+
+  if (claim.status === "active") {
+    // approved claims need an admin to reverse — solver can't self-unclaim
+    return { error: "contact_admin" };
+  }
+
+  if (claim.status !== "pending_approval") {
     return { error: "This claim is no longer active" };
+  }
 
   const { error } = await supabase
     .from("claims")
@@ -111,3 +128,5 @@ export async function unclaimProblem(formData: FormData) {
   revalidatePath("/problems");
   return { success: true };
 }
+
+

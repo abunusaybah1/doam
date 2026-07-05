@@ -1,102 +1,113 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { GrLocation } from "react-icons/gr";
+import { BiSolidUpvote } from "react-icons/bi";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 type Problem = {
   id: string;
   heading: string;
+  description: string;
   category: string;
   status: string;
   condition: string;
   state: string;
   lga: string;
-  image_url: string;
-  follower_count: number;
-  people_affected: number | null;
-  created_at: string;
-  user_profiles: { full_name: string } | null;
+  thumbnail_url: string | null;
+  endorsement_count: number;
 };
 
-const conditionStyles: Record<string, string> = {
-  emergency: "text-red-500 border-red-500",
-  critical: "text-orange border-orange",
-  concern: "text-umber border-umber",
+const statusLabel: Record<string, string> = {
+  active: "Available",
+  in_progress: "In progress",
 };
 
-export default function AllProblems({
-  problems,
-  followedIds,
-}: {
-  problems: Problem[];
-  followedIds: string[];
-}) {
+const statusColor: Record<string, string> = {
+  active: "bg-blue-600",
+  in_progress: "bg-amber-500",
+};
+
+export default function AllProblems({ problems }: { problems: Problem[] }) {
   if (problems.length === 0) {
     return (
-      <div className="border border-border px-6 py-10 text-center">
-        <p className="text-umber text-sm">
-          No problems have been reported yet.
-        </p>
+      <div className="border border-border px-6 py-12 text-center">
+        <p className="text-umber text-sm">No open problems yet.</p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {problems.map((p) => (
-        <Link
-          key={p.id}
-          href={`/problems/${p.id}`}
-          className="border border-border hover:border-orange/50 bg-surface flex flex-col transition-colors group"
+    <div className="flex flex-wrap gap-6">
+      {problems.slice(0, 4).map((problem) => (
+        <div
+          key={problem.id}
+          className="flex flex-col bg-surface rounded-lg overflow-hidden transition-all hover:shadow-[0_8px_24px_rgba(255,140,0,0.15)] hover:-translate-y-1 w-full md:w-[47%] lg:w-[31%]"
         >
-          {/* image */}
-          <div className="h-40 bg-border overflow-hidden">
-            {p.image_url ? (
+          <div className="relative h-48 w-full">
+            {problem.thumbnail_url ? (
               <Image
-                src={p.image_url}
-                alt={p.heading}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                src={problem.thumbnail_url}
+                alt={problem.heading}
+                width={400}
+                height={192}
+                className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-umber text-[0.7rem] uppercase tracking-widest">
-                No image
-              </div>
+              <div className="w-full h-full bg-bark" />
             )}
+
+            <span
+              className={`absolute top-3 right-3 text-[10px] text-parch ${
+                problem.condition === "emergency"
+                  ? "bg-red-500"
+                  : problem.condition === "critical"
+                    ? "bg-orange-500"
+                    : "bg-green-600"
+              } px-2.5 py-1 rounded-full uppercase font-bold tracking-wide`}
+            >
+              {problem.condition}
+            </span>
+
+            <span
+              className={`absolute top-0 left-0 text-[10px] text-parch ${
+                statusColor[problem.status] ?? "bg-umber"
+              } px-2.5 py-1 uppercase font-bold tracking-wide`}
+            >
+              {statusLabel[problem.status] ?? problem.status}
+            </span>
           </div>
 
-          {/* content */}
-          <div className="p-5 flex flex-col gap-3 flex-1">
-            <div className="flex items-center justify-between">
-              <span
-                className={`text-[0.62rem] uppercase tracking-widest border px-2 py-0.5 ${
-                  conditionStyles[p.condition] ?? "text-umber border-umber"
-                }`}
+          <div className="flex flex-col gap-3 p-5 flex-1 border-t border-t-border">
+            <p className="flex items-center gap-1 text-[0.7rem] text-umber">
+              <GrLocation />
+              {problem.lga}, {problem.state}
+            </p>
+
+            <h3 className="text-xl text-parch leading-snug">
+              {problem.heading}
+            </h3>
+
+            <p className="text-[0.85rem] text-parch/60 leading-relaxed line-clamp-2 flex-1">
+              {problem.description}
+            </p>
+
+            <div className="flex items-center justify-between pt-3 border-t border-border mt-2">
+              <p className="flex items-center gap-1.5 text-[0.75rem] text-parch/70">
+                <BiSolidUpvote className="text-orange -mt-0.5" />
+                {problem.endorsement_count} endorsement
+                {problem.endorsement_count !== 1 ? "s" : ""}
+              </p>
+
+              <Link
+                href={`/problems/${problem.id}`}
+                className="flex items-center gap-1.5 text-[0.75rem] uppercase tracking-wide font-bold text-orange hover:text-ember transition-colors"
               >
-                {p.condition}
-              </span>
-              {followedIds.includes(p.id) && (
-                <span className="text-[0.62rem] uppercase tracking-widest text-umber">
-                  Following
-                </span>
-              )}
-            </div>
-
-            <p className="text-parch text-sm font-medium leading-snug flex-1">
-              {p.heading}
-            </p>
-
-            <p className="text-[0.68rem] uppercase tracking-widest text-umber">
-              {p.category} · {p.lga}, {p.state}
-            </p>
-
-            <div className="flex items-center justify-between pt-3 border-t border-border">
-              <span className="text-[0.65rem] text-umber">
-                {p.follower_count} following
-              </span>
-              <span className="text-[0.65rem] text-orange uppercase tracking-widest">
-                View
-              </span>
+                View details
+                <FaExternalLinkAlt className="scale-90" />
+              </Link>
             </div>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );

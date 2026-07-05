@@ -10,6 +10,7 @@ import { FiUser } from "react-icons/fi";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { navMenuUser, navMenuNonUser } from "@/lib/data";
+import ProblemsNavDropdown from "@/components/problems/ProblemsNavDropdown";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -22,13 +23,11 @@ export default function Navbar() {
   useEffect(() => {
     const supabase = createClient();
 
-    // read session from cookie — no network call, works offline/unstable
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
-    // keep in sync with auth changes (login, logout, token refresh)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -39,7 +38,6 @@ export default function Navbar() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
@@ -67,7 +65,6 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-bark border-b border-border py-2">
       <div className="flex items-center justify-between px-5 h-16 md:px-10 lg:px-16">
-        {/* logo */}
         <Link href="/" className="shrink-0">
           <Image
             src="/images/logos/orange-text-trans.png"
@@ -79,23 +76,24 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* desktop nav links — center */}
         <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
-          {navLinks.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-parch/60 hover:text-parch text-[0.7rem] uppercase tracking-widest transition-colors hover:underline underline-offset-4"
-            >
-              {item.name}
-            </Link>
-          ))}
+          {navLinks.map((item) =>
+            item.name === "Problems" ? (
+              <ProblemsNavDropdown key={item.name} />
+            ) : (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-parch/60 hover:text-parch text-[0.7rem] uppercase tracking-widest transition-colors hover:underline underline-offset-4"
+              >
+                {item.name}
+              </Link>
+            ),
+          )}
         </nav>
 
-        {/* desktop right side */}
         <div className="hidden md:flex items-center shrink-0 min-w-27.5 justify-end">
           {loading ? (
-            // placeholder so layout doesn't shift while session loads
             <div className="w-27.5 h-8 bg-surface animate-pulse" />
           ) : user ? (
             <div className="relative" ref={dropdownRef}>
@@ -112,13 +110,6 @@ export default function Navbar() {
 
               {dropdownOpen && (
                 <div className="absolute right-0 top-full mt-6 w-48 bg-surface border border-border flex flex-col z-50">
-                  {/* <Link
-                    href="/dashboard"
-                    onClick={() => setDropdownOpen(false)}
-                    className="text-parch/70 hover:text-parch hover:bg-border text-[0.7rem] uppercase tracking-widest px-4 py-3 border-b border-border transition-colors"
-                  >
-                    Dashboard
-                  </Link> */}
                   <Link
                     href="/dashboard/profile"
                     onClick={() => setDropdownOpen(false)}
@@ -145,7 +136,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* mobile toggle */}
         <button
           className="md:hidden border border-orange border-r-4 text-parch px-2 py-1 text-2xl leading-none cursor-pointer"
           onClick={() => setOpen(!open)}
@@ -156,19 +146,49 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* mobile menu */}
       {open && (
         <nav className="md:hidden border-t border-border flex flex-col">
-          {navLinks.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="text-parch/70 hover:text-parch text-[0.7rem] uppercase tracking-widest px-5 py-4 border-b border-border transition-colors"
-            >
-              {item.name}
-            </Link>
-          ))}
+          {navLinks.map((item) =>
+            item.name === "Problems" ? (
+              <div key={item.name} className="border-b border-border">
+                <p className="text-parch/70 text-[0.7rem] uppercase tracking-widest px-5 py-4">
+                  Problems
+                </p>
+                <div className="flex flex-col ml-5 border-l border-border pb-2">
+                  <Link
+                    href="/problems"
+                    onClick={() => setOpen(false)}
+                    className="text-parch/50 hover:text-parch text-[0.68rem] uppercase tracking-widest pl-4 pr-5 py-2.5 block"
+                  >
+                    All problems
+                  </Link>
+                  <Link
+                    href="/problems?filter=in_progress"
+                    onClick={() => setOpen(false)}
+                    className="text-parch/50 hover:text-parch text-[0.68rem] uppercase tracking-widest pl-4 pr-5 py-2.5 block"
+                  >
+                    In progress
+                  </Link>
+                  <Link
+                    href="/problems?filter=completed"
+                    onClick={() => setOpen(false)}
+                    className="text-parch/50 hover:text-parch text-[0.68rem] uppercase tracking-widest pl-4 pr-5 py-2.5 block"
+                  >
+                    Completed
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="text-parch/70 hover:text-parch text-[0.7rem] uppercase tracking-widest px-5 py-4 border-b border-border transition-colors"
+              >
+                {item.name}
+              </Link>
+            ),
+          )}
 
           {loading ? null : user ? (
             <>

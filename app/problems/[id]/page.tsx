@@ -5,6 +5,9 @@ import ImageGallery from "@/components/problems/ImageGallery";
 import VideoEmbed from "@/components/problems/VideoEmbed";
 import EndorseButton from "@/components/problems/EndorseButton";
 import ClaimSection from "@/components/problems/ClaimSection";
+import OwnerActionsBar from "@/components/problems/OwnerActionsBar";
+import PendingReviewView from "@/components/problems/PendingReviewView";
+import { BiInfoCircle } from "react-icons/bi";
 
 export default async function ProblemDetailPage({
   params,
@@ -26,11 +29,18 @@ export default async function ProblemDetailPage({
 
   if (!problem) notFound();
 
+  const isOwner = !!user && user.id === problem.reporter_id;
+
   const { data: images } = await supabase
     .from("problem_images")
     .select("id, image_url, position")
     .eq("problem_id", id)
     .order("position", { ascending: true });
+
+  if (problem.status === "pending" || problem.status === "pending_delete") {
+    if (!isOwner) notFound();
+    return <PendingReviewView problem={problem} images={images ?? []} />;
+  }
 
   let hasEndorsed = false;
   let userProfile = null;
@@ -54,11 +64,11 @@ export default async function ProblemDetailPage({
     userProfile = profile;
   }
 
-  const { data: activeClaim } = await supabase
+  const { data: claim } = await supabase
     .from("claims")
-    .select("id, solver_id, plan, timeline, claimed_at")
+    .select("id, solver_id, plan, timeline, claimed_at, status")
     .eq("problem_id", id)
-    .eq("status", "active")
+    .in("status", ["active", "pending_approval"])
     .maybeSingle();
 
   const statusLabel: Record<string, string> = {
@@ -76,10 +86,15 @@ export default async function ProblemDetailPage({
   return (
     <main className="min-h-screen bg-bark">
       <div className="px-6 md:px-10 py-10 flex flex-col gap-8 max-w-4xl mx-auto">
+        {isOwner && (
+          <OwnerActionsBar
+            problemId={problem.id}
+            status={problem.status}
+            hasActiveClaim={claim?.status === "active"}
+          />
+        )}
         <ImageGallery images={images ?? []} heading={problem.heading} />
-
         {problem.video_link && <VideoEmbed url={problem.video_link} />}
-
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2 flex-wrap">
             <span
@@ -113,17 +128,17 @@ export default async function ProblemDetailPage({
             <p className="text-[0.7rem] uppercase tracking-widest text-umber">
               Started {problem.duration} ago
             </p>
-            <span className="hidden md:inline text-parch font-bold ">&middot;</span>
+            <span className="hidden md:inline text-parch font-bold ">
+              &middot;
+            </span>
             <p className="text-[0.7rem] uppercase tracking-widest text-umber">
               Category: {problem.category}
             </p>
           </div>
         </div>
-
         <p className="text-[0.95rem] text-parch leading-relaxed whitespace-pre-line">
           {problem.description}
         </p>
-
         <div className="flex flex-col gap-2 border-t border-border pt-6">
           <p className="text-[0.85rem] text-parch">
             <span className="">Location:</span>
@@ -137,20 +152,28 @@ export default async function ProblemDetailPage({
             </p>
           )}
         </div>
-
-        <EndorseButton
-          problemId={problem.id}
-          initialCount={problem.endorsement_count}
-          initialEndorsed={hasEndorsed}
-          isLoggedIn={!!user}
-        />
-
+        {isOwner ? (
+          <div className="flex gap-1 text-umber border-border border-t pt-5">
+            <BiInfoCircle className="" />
+            <p className="text-[0.8rem]">
+              Endorsements aren&apos;t available on your own report.
+            </p>
+          </div>
+        ) : (
+          <EndorseButton
+            problemId={problem.id}
+            initialCount={problem.endorsement_count}
+            initialEndorsed={hasEndorsed}
+            isLoggedIn={!!user}
+          />
+        )}
         <ClaimSection
+          key={claim?.id ?? "no-claim"}
           problemId={problem.id}
           problemStatus={problem.status}
           isLoggedIn={!!user}
           isSolver={userProfile?.is_solver ?? false}
-          activeClaim={activeClaim}
+          claim={claim}
           currentUserId={user?.id ?? null}
         />
       </div>

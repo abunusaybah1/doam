@@ -12,7 +12,7 @@ export default function SolverBanner() {
         </p>
       </div>
       <Link
-        href="/dashboard/ solver"
+        href="/dashboard/solver"
         className="text-[0.7rem] uppercase font-medium tracking-widest bg-parch text-orange px-5 py-2.5 hover:opacity-90 transition-colors whitespace-nowrap self-start md:self-auto"
       >
         Become a solver
