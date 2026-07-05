@@ -18,23 +18,23 @@ export default function StatsStrip({
   const stats = [
     {
       label: "Total reported",
-      value: counts?.total,
-      href: "/dashboard/problems",
+      value: counts?.total ?? 0,
+      href: "/dashboard/my-problems",
     },
     {
       label: "Pending review",
-      value: counts?.pending,
-      href: "/dashboard/problems?status=pending",
+      value: counts?.pending ?? 0,
+      href: "/dashboard/my-problems?status=pending",
     },
     {
       label: "In progress",
-      value: counts?.in_progress,
-      href: "/dashboard/problems?status=in_progress",
+      value: counts?.in_progress ?? 0,
+      href: "/dashboard/my-problems?status=in_progress",
     },
     {
       label: "Completed",
-      value: counts?.completed,
-      href: "/dashboard/problems?status=completed",
+      value: counts?.completed ?? 0,
+      href: "/dashboard/my-problems?status=completed",
     },
     { label: "Endorsed by you", value: endorsed, href: null },
   ];

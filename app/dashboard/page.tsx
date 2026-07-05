@@ -85,9 +85,8 @@ export default async function DashboardPage() {
 
         {/* stats — reporter focused */}
         <StatsStrip
-          reported={profile?.problems_reported ?? 0}
           endorsed={endorsedCount}
-          statusCounts={statusCounts}
+          counts={statusCounts}
         />
 
         {/* become a solver banner */}
