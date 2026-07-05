@@ -31,7 +31,7 @@ export default function ProblemsNavDropdown({
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1 text-parch/60 hover:text-parch text-[0.7rem] uppercase tracking-widest transition-colors"
+        className={` ${open ? "text-parch" : "text-parch/60"} flex items-center gap-1 text-[0.7rem] uppercase tracking-widest transition-colors`}
       >
         Problems
         <FiChevronDown
@@ -40,7 +40,7 @@ export default function ProblemsNavDropdown({
         />
       </button>
       {open && (
-        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-4 w-44 bg-surface border border-border flex flex-col z-50">
+        <div className="absolute -right-14 top-full mt-8 w-48 bg-surface border border-border flex flex-col  z-50">
           {FILTERS.map((f) => (
             <Link
               key={f.href}
