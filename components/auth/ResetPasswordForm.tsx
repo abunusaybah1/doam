@@ -52,7 +52,7 @@ export default function ResetPasswordForm() {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-          New password
+          New password <span className="text-orange">*</span>
         </label>
         <input
           type={showPassword ? "text" : "password"}
@@ -67,7 +67,7 @@ export default function ResetPasswordForm() {
 
       <div className="flex flex-col gap-1.5">
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-          Confirm password
+          Confirm password <span className="text-orange">*</span>
         </label>
         <input
           type={showPassword ? "text" : "password"}

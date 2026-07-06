@@ -100,7 +100,7 @@ const SignUpForm = () => {
       <div className="flex gap-3">
         <div className="flex flex-col gap-1.5 flex-1">
           <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
-            First name
+            First name <span className="text-orange">*</span>
           </label>
           <input
             name="firstName"
@@ -114,7 +114,7 @@ const SignUpForm = () => {
         </div>
         <div className="flex flex-col gap-1.5 flex-1">
           <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
-            Last name
+            Last name <span className="text-orange">*</span>
           </label>
           <input
             name="lastName"
@@ -130,7 +130,7 @@ const SignUpForm = () => {
 
       <div className="flex flex-col gap-1.5">
         <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
-          Email address
+          Email address <span className="text-orange">*</span>
         </label>
         <input
           name="email"
@@ -145,7 +145,7 @@ const SignUpForm = () => {
 
       <div className="flex flex-col gap-1.5">
         <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
-          Password
+          Password <span className="text-orange">*</span>
         </label>
         <input
           name="password"
@@ -161,7 +161,7 @@ const SignUpForm = () => {
 
       <div className="flex flex-col gap-1.5">
         <label className="  font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
-          Confirm password
+          Confirm password <span className="text-orange">*</span>
         </label>
         <input
           name="confirmPassword"

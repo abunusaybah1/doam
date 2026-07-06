@@ -23,10 +23,30 @@ export default function Navbar() {
   useEffect(() => {
     const supabase = createClient();
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
+    async function checkUser() {
+      // getUser() hits the Auth server for real — catches deleted/banned
+      // accounts immediately, unlike getSession() which only reads the
+      // local JWT and can't tell if the account behind it still exists
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
+      if (error || !user) {
+        // Account is gone (or session invalid) but this client instance
+        // still thinks it's logged in — explicitly sign out so
+        // onAuthStateChange fires and the UI actually updates
+        await supabase.auth.signOut();
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      setUser(user);
       setLoading(false);
-    });
+    }
+
+    checkUser();
 
     const {
       data: { subscription },
@@ -38,6 +58,7 @@ export default function Navbar() {
     return () => subscription.unsubscribe();
   }, []);
 
+  
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (

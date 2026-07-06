@@ -164,7 +164,8 @@ export default function ClaimSection({
             <input type="hidden" name="claim_id" value={claim.id} />
             <div className="flex flex-col gap-1.5">
               <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-                Why are you cancelling this?
+                Why are you cancelling this?{" "}
+                <span className="text-orange">*</span>
               </label>
               <textarea
                 name="reason"

@@ -41,7 +41,7 @@ const LoginForm = ({ redirectTo }: { redirectTo: string | null }) => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
         <label className="font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
-          Email address
+          Email address <span className="text-orange">*</span>
         </label>
         <input
           name="email"
@@ -56,7 +56,7 @@ const LoginForm = ({ redirectTo }: { redirectTo: string | null }) => {
 
       <div className="flex flex-col gap-1.5">
         <label className="font-bold text-[.68rem] tracking-[.16em] uppercase text-umber">
-          Password
+          Password <span className="text-orange">*</span>
         </label>
         <div className="flex">
           <input

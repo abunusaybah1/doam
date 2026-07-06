@@ -322,6 +322,7 @@ export default function EditProblemForm({
             </span>
             <input
               name="images"
+              required
               type="file"
               accept="image/*"
               multiple

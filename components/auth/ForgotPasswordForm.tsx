@@ -85,7 +85,7 @@ export default function ForgotPasswordForm({ urlError }: Props) {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-[0.68rem] uppercase tracking-widest text-umber">
-              Email address
+              Email address <span className="text-orange">*</span>
             </label>
 
             <input

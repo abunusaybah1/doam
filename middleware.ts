@@ -30,10 +30,10 @@ export async function middleware(request: NextRequest) {
   // Reads session from cookies locally — no network call, won't fail on flaky internet.
   // This still refreshes the token if it's close to expiry (handled internally by the SSR package).
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  const user = session?.user ?? null;
+  // const user = session?.user ?? null;
 
   // Define protected routes
   const isProtectedRoute = request.nextUrl.pathname.startsWith("/dashboard");
