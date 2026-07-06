@@ -48,7 +48,7 @@ export default function BecomeSolverForm({
 
     const result = await becomeSolver(formData);
 
-    if (result?.error) {
+    if ("error" in result) {
       setLoading(false);
       setError(result.error);
       return;
