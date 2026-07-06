@@ -5,7 +5,7 @@ export default function SignUpPage() {
     <main className="min-h-screen bg-bark flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-md">
         <div className="mb-8">
-          <h1 className="  text-3xl text-parch mb-2">Join the movement</h1>
+          <h1 className="  text-3xl text-orange font-bold mb-2">Join the movement</h1>
           <p className="  text-[.85rem] tracking-wide text-umber">
             Report problems, track solutions, and make your community count.
           </p>

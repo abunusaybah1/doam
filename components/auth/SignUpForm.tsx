@@ -44,6 +44,7 @@ const SignUpForm = () => {
         data: {
           full_name: `${fName.trim()} ${lName.trim()}`,
         },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
