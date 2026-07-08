@@ -6,9 +6,9 @@ import SampleProblems from "@/components/landing/SampleProblems";
 
 export default function Home() {
   return (
-    <main className="bg-[#0e0e0e] min-h-screen text-[#f5f5dc]">
+    <main className="bg-bark min-h-screen text-[#f5f5dc]">
       <Hero />
-      <hr className="border-t border-[#2a2a2a] mx-5 md:mx-10" />
+      <hr className="border-t border-border mx-5 md:mx-10" />
       <SampleProblems />
       <HowItWorks />
       <Roles />

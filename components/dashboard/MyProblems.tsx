@@ -45,7 +45,7 @@ export default function MyProblems({ problems }: { problems: Problem[] }) {
           href="/dashboard/report"
           className="text-[0.7rem] uppercase tracking-widest text-orange hover:text-ember transition-colors"
         >
-          Report your first problem →
+          Report your first problem
         </Link>
       </div>
     );
@@ -97,7 +97,7 @@ export default function MyProblems({ problems }: { problems: Problem[] }) {
                   href={`/problems/${p.id}`}
                   className="text-[0.65rem] uppercase tracking-widest text-orange hover:text-ember transition-colors ml-auto"
                 >
-                  View →
+                  View
                 </Link>
               </div>
             </div>

@@ -54,6 +54,8 @@ export async function middleware(request: NextRequest) {
   if (user && isAuthRoute) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
+    // drop auth-page-only params like ?error=link_expired — meaningless on /dashboard
+    url.search = "";
     return NextResponse.redirect(url);
   }
 

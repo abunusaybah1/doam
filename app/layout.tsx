@@ -3,6 +3,7 @@ import { Poppins, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { StaleAuthHashCleanup } from "@/components/StaleAuthHashCleanup ";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${playfair.variable} font-poppins antialiased`}
       >
+        <StaleAuthHashCleanup />
         <Navbar />
         {children}
         <Footer />

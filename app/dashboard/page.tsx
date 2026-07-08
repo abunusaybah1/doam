@@ -8,7 +8,6 @@ import SolverBanner from "@/components/dashboard/SolverBanner";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -111,9 +110,9 @@ export default async function DashboardPage() {
             <h2 className="font-playfair text-xl text-parch">Open problems</h2>
             <Link
               href="/problems"
-              className="text-[0.7rem] uppercase tracking-widest text-orange hover:text-ember transition-colors"
+              className="text-[0.7rem] bg-orange uppercase tracking-widest text-parch hover:bg-parch hover:text-orange hover:font-semibold px-4 py-2 transition-colors"
             >
-              See all →
+              See all
             </Link>
           </div>
           <AllProblems problems={allProblems ?? []} />

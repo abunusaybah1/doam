@@ -53,7 +53,7 @@ export default function StatsStrip({
           </>
         );
         const cls = `flex-1 min-w-[45%] md:min-w-0 px-6 py-6 ${
-          i !== stats.length - 1 ? "border-r border-border" : ""
+          i !== stats.length - 1 ? "border-r border-b border-border" : ""
         }`;
         return s.href ? (
           <Link
@@ -64,7 +64,7 @@ export default function StatsStrip({
             {content}
           </Link>
         ) : (
-          <div key={s.label} className={cls}>
+          <div key={s.label} className={`${cls} `}>
             {content}
           </div>
         );
