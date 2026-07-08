@@ -22,7 +22,7 @@ export default async function ProfilePage({
     .single();
 
   const { message, redirectTo } = await searchParams;
-  const showReporterGateMessage = message === "complete_profile";
+  const showDashboardGateMessage = message === "complete_profile";
   const showSolverGateMessage = message === "complete_solver_profile";
 
   return (
@@ -35,13 +35,13 @@ export default async function ProfilePage({
           <h1 className=" text-3xl md:text-4xl text-parch">Your profile</h1>
         </div>
 
-        {showReporterGateMessage && (
+        {showDashboardGateMessage && (
           <div className="mb-8 bg-orange px-5 py-4">
             <p className="text-[0.7rem] uppercase font-bold tracking-widest text-parch mb-1">
               One step first
             </p>
             <p className="text-parch text-sm">
-              Complete your profile before you can report problems.
+              Complete your profile before you can access your dashboard.
             </p>
           </div>
         )}

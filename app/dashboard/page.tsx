@@ -58,6 +58,16 @@ export default async function DashboardPage() {
 
   const endorsedCount = endorsed?.length ?? 0;
 
+  const isComplete =
+    profile?.username && profile?.phone && profile?.state && profile?.lga;
+
+  if (!isComplete) {
+    redirect(
+      "/dashboard/profile?message=complete_profile&redirectTo=/dashboard/",
+      //  "/dashboard/profile?message=complete_profile&redirectTo=/dashboard/report",
+    );
+  }
+
   return (
     <main className="min-h-screen bg-bark">
       <div className="max-w-6xl mx-auto px-5 md:px-10 py-10">
