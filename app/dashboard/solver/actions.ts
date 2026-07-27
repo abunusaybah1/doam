@@ -1,5 +1,6 @@
 "use server";
 
+import { checkNotBanned } from "@/lib/auth/checkBanned";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
@@ -16,6 +17,9 @@ export async function becomeSolver(
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
+
+  const banCheck = await checkNotBanned(supabase, user.id);
+  if (banCheck.error) return { error: banCheck.error };
 
   const solver_bio = formData.get("solver_bio") as string;
   const solver_skills = formData.getAll("solver_skills") as string[];

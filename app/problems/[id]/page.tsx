@@ -8,6 +8,7 @@ import ClaimSection from "@/components/problems/ClaimSection";
 import OwnerActionsBar from "@/components/problems/OwnerActionsBar";
 import PendingReviewView from "@/components/problems/PendingReviewView";
 import { BiInfoCircle } from "react-icons/bi";
+import SolutionReportSection from "@/components/problems/SolutionReportSection";
 
 export default async function ProblemDetailPage({
   params,
@@ -70,6 +71,18 @@ export default async function ProblemDetailPage({
     .eq("problem_id", id)
     .in("status", ["active", "pending_approval"])
     .maybeSingle();
+
+  let latestSolutionReport = null;
+  if (claim?.status === "active" && claim.solver_id === user?.id) {
+    const { data } = await supabase
+      .from("solution_reports")
+      .select("id, status, summary, rejection_reason, created_at")
+      .eq("claim_id", claim.id)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    latestSolutionReport = data;
+  }
 
   const statusLabel: Record<string, string> = {
     active: "Available",
@@ -176,6 +189,13 @@ export default async function ProblemDetailPage({
           claim={claim}
           currentUserId={user?.id ?? null}
         />
+        {claim?.status === "active" && claim.solver_id === user?.id && (
+          <SolutionReportSection
+            claimId={claim.id}
+            problemId={problem.id}
+            latestReport={latestSolutionReport}
+          />
+        )}
       </div>
     </main>
   );

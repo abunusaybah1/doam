@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { checkNotBanned } from "@/lib/auth/checkBanned";
 
 export async function claimProblem(formData: FormData) {
   const supabase = await createClient();
@@ -12,8 +13,11 @@ export async function claimProblem(formData: FormData) {
   } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
 
+  const banCheck = await checkNotBanned(supabase, user.id);
+  if (banCheck.error) return { error: banCheck.error };
+
   const problem_id = formData.get("problem_id") as string;
-  const plan = formData.get("plan") as string;
+  const plan = formData.get("plan") as string;   
   const timeline = formData.get("timeline") as string;
 
   if (!plan || !timeline) {
@@ -105,7 +109,6 @@ export async function unclaimProblem(formData: FormData) {
   if (claim.solver_id !== user.id) return { error: "This isn't your claim" };
 
   if (claim.status === "active") {
-    // approved claims need an admin to reverse — solver can't self-unclaim
     return { error: "contact_admin" };
   }
 
@@ -113,10 +116,12 @@ export async function unclaimProblem(formData: FormData) {
     return { error: "This claim is no longer active" };
   }
 
+  // withdrawing a pending request is different from abandoning an
+  // approved commitment — this claim was never actually taken on
   const { error } = await supabase
     .from("claims")
     .update({
-      status: "abandoned",
+      status: "withdrawn",
       abandoned_at: new Date().toISOString(),
       abandon_reason: reason,
     })
@@ -128,5 +133,3 @@ export async function unclaimProblem(formData: FormData) {
   revalidatePath("/problems");
   return { success: true };
 }
-
-

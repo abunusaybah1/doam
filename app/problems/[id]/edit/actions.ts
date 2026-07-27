@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { checkNotBanned } from "@/lib/auth/checkBanned";
 
 export async function updateProblem(formData: FormData) {
   const problemId = formData.get("problem_id") as string;
@@ -12,6 +13,9 @@ export async function updateProblem(formData: FormData) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return { error: "You must be logged in." };
+
+  const banCheck = await checkNotBanned(supabase, user.id);
+if (banCheck.error) return { error: banCheck.error };
 
   const { data: problem } = await supabase
     .from("problems")

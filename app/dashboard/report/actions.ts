@@ -1,5 +1,6 @@
 "use server";
 
+import { checkNotBanned } from "@/lib/auth/checkBanned";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -10,6 +11,9 @@ export async function reportProblem(formData: FormData) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
+
+  const banCheck = await checkNotBanned(supabase, user.id);
+  if (banCheck.error) return { error: banCheck.error };
 
   const heading = formData.get("heading") as string;
   const description = formData.get("description") as string;

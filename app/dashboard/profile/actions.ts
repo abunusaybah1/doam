@@ -1,5 +1,6 @@
 "use server";
 
+import { checkNotBanned } from "@/lib/auth/checkBanned";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -11,6 +12,9 @@ export async function updateProfile(formData: FormData) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
+
+  const banCheck = await checkNotBanned(supabase, user.id);
+  if (banCheck.error) return { error: banCheck.error };
 
   const full_name = formData.get("full_name") as string;
   const username = formData.get("username") as string;

@@ -25,7 +25,7 @@ export const latestReports = [
 ];
 
 export const stats = [
-  { label: "Problems filed", num: "1,204" },
+  { label: "Problems reported", num: "1,204" },
   { label: "In progress", num: "38" },
   { label: "Resolved", num: "91" },
 ];
@@ -56,7 +56,7 @@ export const sampleProblems = [
     desc: "Women and children walk hours before sunrise just to get water that is barely clean. There is no excuse for this in 2026. None.",
     img: Water,
     endorsement: 445,
-    status: "CRITICAL",
+    status: "URGENT",
   },
   {
     id: "04",
@@ -65,7 +65,7 @@ export const sampleProblems = [
     desc: "Generators running 20 hours a day. Businesses folding. Students reading by candlelight. NEPA has been a punchline for 40 years. It shouldn't still be funny.",
     img: Darkness,
     endorsement: 527,
-    status: "ONGOING",
+    status: "CRITICAL",
   },
 ];
 

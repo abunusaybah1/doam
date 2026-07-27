@@ -97,7 +97,8 @@ export default function SolverDashboard({
   const activeClaims = claims.filter((c) => c.status === "active");
   const completedClaims = claims.filter((c) => c.status === "completed");
   const abandonedClaims = claims.filter((c) => c.status === "abandoned");
-
+  const rejectedClaims = claims.filter((c) => c.status === "rejected");
+  const withdrawnClaims = claims.filter((c) => c.status === "withdrawn");
   const stats = [
     { label: "Pending approval", value: pendingClaims.length },
     { label: "Active claims", value: activeClaims.length },
@@ -171,8 +172,7 @@ export default function SolverDashboard({
         </h2>
         {activeClaims.length === 0 ? (
           <p className="text-[0.85rem] text-parch/70">
-            You don&apos;t have any active claims right now — browse open
-            problems to pick one up.
+            No active claims yet.
           </p>
         ) : (
           <div className="flex flex-col gap-3">
@@ -212,6 +212,40 @@ export default function SolverDashboard({
           </div>
         </div>
       )}
+
+      <div className="flex flex-col gap-3">
+        <h2 className="text-[0.7rem] uppercase tracking-widest text-umber">
+          Rejected
+        </h2>
+        {rejectedClaims.length === 0 ? (
+          <p className="text-[0.85rem] text-parch/70">
+            No rejected problems yet.
+          </p>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {rejectedClaims.map((c) => (
+              <ClaimRow key={c.id} claim={c} tone="default" />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <h2 className="text-[0.7rem] uppercase tracking-widest text-umber">
+          Withdrawn
+        </h2>
+        {withdrawnClaims.length === 0 ? (
+          <p className="text-[0.85rem] text-parch/70">
+            No withdrawn problems yet.
+          </p>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {withdrawnClaims.map((c) => (
+              <ClaimRow key={c.id} claim={c} tone="default" />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

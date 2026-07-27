@@ -7,7 +7,7 @@ import {
   unclaimProblem,
 } from "@/app/problems/[id]/claim-actions";
 import { MONTHS } from "@/lib/data";
-import { FiClock, FiAlertCircle } from "react-icons/fi";
+import { FiClock, FiAlertCircle, FiShield } from "react-icons/fi";
 import Link from "next/link";
 
 type Claim = {
@@ -42,12 +42,22 @@ export default function ClaimSection({
   const [unclaimLoading, setUnclaimLoading] = useState(false);
   const [targetMonth, setTargetMonth] = useState("");
   const [targetYear, setTargetYear] = useState("");
+  const [agreedResponsibility, setAgreedResponsibility] = useState(false);
+  const [agreedProof, setAgreedProof] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
   const router = useRouter();
 
   const timelineLabel =
     targetMonth && targetYear
       ? `${MONTHS[parseInt(targetMonth) - 1]} ${targetYear}`
       : "";
+
+  const CONFIRM_PHRASE = "I WILL SOLVE THIS";
+  const canSubmitClaim =
+    agreedResponsibility &&
+    agreedProof &&
+    timelineLabel &&
+    confirmText.trim().toUpperCase() === CONFIRM_PHRASE;
 
   if (problemStatus === "completed") {
     return (
@@ -61,7 +71,6 @@ export default function ClaimSection({
 
   const isMyClaim = claim && claim.solver_id === currentUserId;
 
-  // someone else's claim, in either state — problem is off-limits either way
   if (claim && !isMyClaim) {
     const isPending = claim.status === "pending_approval";
     return (
@@ -81,14 +90,16 @@ export default function ClaimSection({
     );
   }
 
-  // my own claim, approved and active
   if (isMyClaim && claim.status === "active") {
     return (
-      <div className="flex flex-col gap-4 bg-surface border border-orange/30 px-5 py-5">
-        <p className="text-[0.7rem] uppercase tracking-widest text-orange font-bold">
-          You&apos;re solving this
-        </p>
-        <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4 bg-surface border-2 border-orange/40 px-5 py-5">
+        <div className="flex items-center gap-2">
+          <FiShield className="text-orange shrink-0" size={18} />
+          <p className="text-[0.7rem] uppercase tracking-widest text-orange font-bold">
+            Your public commitment
+          </p>
+        </div>
+        <div className="flex flex-col gap-2 border-l-2 border-orange/40 pl-4">
           <p className="text-[0.85rem] text-parch/80">
             <span className="text-umber">Your plan:</span> {claim.plan}
           </p>
@@ -100,21 +111,21 @@ export default function ClaimSection({
         <div className="flex items-start gap-2 border-t border-border pt-4 mt-1">
           <FiAlertCircle className="text-parch/50 shrink-0 mt-0.5" size={16} />
           <p className="text-[0.8rem] text-parch/60 leading-relaxed">
-            This claim is approved. If you need to step away from it,{" "}
+            This claim has been reviewed and approved — it&apos;s now a standing
+            commitment tied to your name. If you need to step away from it,{" "}
             <Link
               href="/contact-us"
               className="text-orange hover:text-ember underline"
             >
               contact an admin
             </Link>{" "}
-            to have it reversed.
+            to have it formally reversed.
           </p>
         </div>
       </div>
     );
   }
 
-  // my own claim, still pending approval
   if (isMyClaim && claim.status === "pending_approval") {
     async function handleUnclaim(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault();
@@ -135,11 +146,14 @@ export default function ClaimSection({
     }
 
     return (
-      <div className="flex flex-col gap-4 bg-surface border border-amber-500/30 px-5 py-5">
-        <p className="text-[0.7rem] uppercase tracking-widest text-amber-500 font-bold">
-          Claim submitted — awaiting approval
-        </p>
-        <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4 bg-surface border-2 border-amber-500/40 px-5 py-5">
+        <div className="flex items-center gap-2">
+          <FiClock className="text-amber-500 shrink-0" size={18} />
+          <p className="text-[0.7rem] uppercase tracking-widest text-amber-500 font-bold">
+            Claim submitted — awaiting approval
+          </p>
+        </div>
+        <div className="flex flex-col gap-2 border-l-2 border-amber-500/40 pl-4">
           <p className="text-[0.85rem] text-parch/80">
             <span className="text-umber">Your plan:</span> {claim.plan}
           </p>
@@ -150,18 +164,34 @@ export default function ClaimSection({
         </div>
 
         {!showUnclaimForm ? (
-          <button
-            onClick={() => setShowUnclaimForm(true)}
-            className="text-[0.75rem] uppercase tracking-wide font-bold text-red-500 hover:text-red-400 transition-colors w-fit border-t border-border pt-4 mt-1"
-          >
-            Cancel this claim
-          </button>
+          <div className="flex items-start gap-2 border-t border-border pt-4 mt-1">
+            <FiAlertCircle
+              className="text-parch/50 shrink-0 mt-0.5"
+              size={16}
+            />
+            <div className="flex flex-col gap-2">
+              <p className="text-[0.8rem] text-parch/60 leading-relaxed">
+                Withdrawing a claim you&apos;ve made is a real decision — this
+                problem is still waiting for someone to actually show up for it.
+                Only cancel if you genuinely can&apos;t follow through.
+              </p>
+              <button
+                onClick={() => setShowUnclaimForm(true)}
+                className="text-[0.75rem] uppercase tracking-wide font-bold text-red-500 hover:text-red-400 transition-colors w-fit"
+              >
+                Cancel this claim
+              </button>
+            </div>
+          </div>
         ) : (
           <form
             onSubmit={handleUnclaim}
-            className="flex flex-col gap-3 border-t border-border pt-4 mt-1"
+            className="flex flex-col gap-3 border-t border-red-500/30 pt-4 mt-1 bg-bark/40 -mx-5 -mb-5 px-5 pb-5"
           >
             <input type="hidden" name="claim_id" value={claim.id} />
+            <p className="text-[0.72rem] uppercase tracking-widest text-red-500 font-bold">
+              Confirm cancellation
+            </p>
             <div className="flex flex-col gap-1.5">
               <label className="text-[0.68rem] uppercase tracking-widest text-umber">
                 Why are you cancelling this?{" "}
@@ -195,7 +225,7 @@ export default function ClaimSection({
                 onClick={() => setShowUnclaimForm(false)}
                 className="bg-bark text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-surface border border-border transition-colors"
               >
-                Cancel
+                Go back
               </button>
             </div>
           </form>
@@ -251,6 +281,7 @@ export default function ClaimSection({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!canSubmitClaim) return;
     setLoading(true);
     setError("");
 
@@ -291,12 +322,23 @@ export default function ClaimSection({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 bg-surface border-border border p-5"
+      className="flex flex-col gap-5 bg-surface border-2 border-orange/40 p-5"
     >
       <input type="hidden" name="problem_id" value={problemId} />
       <input type="hidden" name="timeline" value={timelineLabel} />
 
-      <h2 className="text-2xl font-bold text-orange">Claim this problem</h2>
+      <div className="flex items-center gap-2 border-b border-border pb-4">
+        <FiShield className="text-orange shrink-0" size={20} />
+        <h2 className="text-xl font-bold text-orange">
+          Solver commitment agreement
+        </h2>
+      </div>
+
+      <p className="text-[0.8rem] text-parch/70 leading-relaxed">
+        This isn&apos;t a casual sign-up. Claiming a problem publicly ties your
+        name to it. The reporter, the community, and anyone browsing this page
+        will see that you took this on — and whether you followed through.
+      </p>
 
       <div className="flex flex-col gap-1.5">
         <label className="text-[0.68rem] uppercase tracking-widest text-umber">
@@ -306,7 +348,7 @@ export default function ClaimSection({
           name="plan"
           required
           rows={3}
-          placeholder="How do you intend to solve this problem?"
+          placeholder="How do you intend to solve this problem, specifically?"
           className="bg-parch border-2 border-parch outline-none px-4 py-3 text-[.9rem] text-bark placeholder:text-warm transition-colors resize-none"
         />
       </div>
@@ -352,6 +394,56 @@ export default function ClaimSection({
         </div>
       </div>
 
+      <div className="flex flex-col gap-3 bg-bark/50 border border-border px-4 py-4">
+        <p className="text-[0.68rem] uppercase tracking-widest text-umber">
+          Before you submit, confirm you understand <span className="text-orange">*</span>
+        </p>
+
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={agreedResponsibility}
+            onChange={(e) => setAgreedResponsibility(e.target.checked)}
+            className="mt-1 accent-orange w-4 h-4 shrink-0"
+          />
+          <span className="text-[0.82rem] text-parch/80 leading-relaxed">
+            I am taking real responsibility for fixing this problem by my stated
+            target date — not just expressing interest.
+          </span>
+        </label>
+
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={agreedProof}
+            onChange={(e) => setAgreedProof(e.target.checked)}
+            className="mt-1 accent-orange w-4 h-4 shrink-0"
+          />
+          <span className="text-[0.82rem] text-parch/80 leading-relaxed">
+            I understand I must submit photo evidence of the completed work, and
+            that abandoning this claim without good reason is visible on my
+            solver record.
+          </span>
+        </label>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label className="text-[0.68rem] uppercase tracking-widest text-umber">
+          Type{" "}
+          <span className="text-orange font-bold">
+            &quot;{CONFIRM_PHRASE}&quot;
+          </span>{" "}
+          to confirm <span className="text-orange">*</span>
+        </label>
+        <input
+          type="text"
+          value={confirmText}
+          onChange={(e) => setConfirmText(e.target.value)}
+          placeholder={CONFIRM_PHRASE}
+          className="bg-parch border-2 border-parch outline-none px-4 py-3 text-[.9rem] text-bark placeholder:text-warm/50 transition-colors uppercase tracking-wide"
+        />
+      </div>
+
       {error && (
         <p className="text-[0.78rem] text-red-500 border-l-2 border-red-500 pl-3">
           {error}
@@ -361,10 +453,10 @@ export default function ClaimSection({
       <div className="flex gap-0 justify-between">
         <button
           type="submit"
-          disabled={loading || !timelineLabel}
-          className="bg-orange text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-ember transition-colors disabled:opacity-60"
+          disabled={loading || !canSubmitClaim}
+          className="bg-orange text-parch text-[0.75rem] uppercase tracking-wide font-bold px-5 py-2.5 hover:bg-ember transition-colors disabled:opacity-40"
         >
-          {loading ? "Submitting..." : "Submit claim"}
+          {loading ? "Submitting..." : "Submit my commitment"}
         </button>
         <button
           type="button"

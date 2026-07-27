@@ -1,5 +1,6 @@
 "use server";
 
+import { checkNotBanned } from "@/lib/auth/checkBanned";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
@@ -10,6 +11,9 @@ export async function toggleEndorsement(problemId: string) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return { error: "You need to be logged in to endorse" };
+
+  const banCheck = await checkNotBanned(supabase, user.id);
+  if (banCheck.error) return { error: banCheck.error };
 
   const { data: problem } = await supabase
     .from("problems")

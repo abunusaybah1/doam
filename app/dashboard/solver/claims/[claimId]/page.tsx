@@ -16,7 +16,15 @@ const STATUS_COPY: Record<string, { label: string; color: string }> = {
     label: "Completed",
     color: "text-green-500 border-green-500/40",
   },
-  abandoned: { label: "Abandoned", color: "text-parch/50 border-border" },
+  abandoned: {
+    label: "Abandoned — missed deadline",
+    color: "text-red-500 border-red-500/40",
+  },
+  rejected: {
+    label: "Rejected by admin",
+    color: "text-parch/50 border-border",
+  },
+  withdrawn: { label: "Withdrawn", color: "text-parch/50 border-border" },
 };
 
 type ProblemShape = {
