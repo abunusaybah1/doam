@@ -15,7 +15,7 @@ export async function updateProblem(formData: FormData) {
   if (!user) return { error: "You must be logged in." };
 
   const banCheck = await checkNotBanned(supabase, user.id);
-if (banCheck.error) return { error: banCheck.error };
+  if (banCheck.error) return { error: banCheck.error };
 
   const { data: problem } = await supabase
     .from("problems")

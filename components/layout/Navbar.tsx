@@ -149,7 +149,7 @@ export default function Navbar() {
             </div>
           ) : (
             <Link
-              href="/auth/login"
+              href="/auth/signup"
               className="bg-orange text-parch text-[0.7rem] uppercase tracking-widest px-4 py-2 hover:bg-ember transition-colors"
             >
               Get Started
@@ -229,7 +229,7 @@ export default function Navbar() {
             </>
           ) : (
             <Link
-              href="/auth/login"
+              href="/auth/signup"
               onClick={() => setOpen(false)}
               className="bg-orange text-parch text-[0.7rem] uppercase tracking-widest px-5 py-4 text-center hover:bg-ember transition-colors"
             >
