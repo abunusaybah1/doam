@@ -13,7 +13,7 @@ export default async function EditProblemPage({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/auth/login?redirectTo=/problems/${id}/edit`);
+  if (!user) redirect(`/login?redirectTo=/problems/${id}/edit`);
 
   const { data: problem } = await supabase
     .from("problems")

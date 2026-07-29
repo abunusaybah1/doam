@@ -179,7 +179,7 @@ export default function HowItWorksPage() {
             already waiting.
           </p>
           <Link
-            href="/auth/login"
+            href="/login"
             className="inline-block bg-orange text-parch text-[0.75rem] uppercase tracking-widest px-8 py-3.5 hover:bg-ember transition-colors"
           >
             Get Started

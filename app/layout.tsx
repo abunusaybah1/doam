@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: "Do-am: Community Problem Tracker",
   description:
     "A living documentary of real problems facing local communities.",
-  icons: [{ url: "/images/doam.ico", sizes: "180x180", type: "image/png" }],
+  icons: [{ url: "/images/logos/doam.ico", sizes: "180x180", type: "image/png" }],
 };
 
 export default function RootLayout({

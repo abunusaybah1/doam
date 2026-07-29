@@ -54,7 +54,7 @@ export default async function ClaimDetailPage({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect("/auth/login");
+  if (!user) redirect("/login");
 
   const { data: rawClaim, error: claimError } = await supabase
     .from("claims")

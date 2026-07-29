@@ -14,7 +14,7 @@ export default async function SolverPage({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect("/auth/login?redirectTo=/dashboard/solver");
+  if (!user) redirect("/login?redirectTo=/dashboard/solver");
 
   const { data: profile } = await supabase
     .from("user_profiles")

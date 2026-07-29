@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { forgotPassword } from "@/app/auth/forgot-password/actions";
+import { forgotPassword } from "@/app/(auth)/forgot-password/actions";
 
 type Props = {
   urlError?: string;
@@ -48,7 +48,7 @@ export default function ForgotPasswordForm({ urlError }: Props) {
             </p>
 
             <Link
-              href="/auth/login"
+              href="/login"
               className="inline-block mt-6 text-[0.7rem] uppercase tracking-widest text-orange hover:text-ember transition-colors bg-bark border border-orange hover:border-ember px-4 py-2"
             >
               Back to login
@@ -114,7 +114,7 @@ export default function ForgotPasswordForm({ urlError }: Props) {
 
         <p className="text-[0.78rem] text-umber mt-6 text-center">
           Remembered it?{" "}
-          <Link href="/auth/login" className="text-orange hover:underline">
+          <Link href="/login" className="text-orange hover:underline">
             Back to login
           </Link>
         </p>

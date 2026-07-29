@@ -73,7 +73,7 @@ const SignUpForm = () => {
         data: {
           full_name: `${fName.trim()} ${lName.trim()}`,
         },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/callback`,
       },
     });
 
@@ -113,7 +113,7 @@ const SignUpForm = () => {
       type: "signup",
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/callback`,
       },
     });
 
@@ -160,12 +160,12 @@ const SignUpForm = () => {
             type="button"
             onClick={handleResend}
             disabled={cooldown > 0 || resending}
-            className="text-[.75rem] tracking-wide uppercase font-bold text-orange hover:text-ember transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-fit"
+            className="text-[.75rem] tracking-wide font-bold text-orange hover:text-ember transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-fit"
           >
             {resending
               ? "Sending..."
               : cooldown > 0
-                ? `Resend available in ${cooldown}s`
+                ? `Resend in ${cooldown}s`
                 : "Resend confirmation email"}
           </button>
 
@@ -309,7 +309,7 @@ const SignUpForm = () => {
       <p className="text-[.75rem] tracking-wide text-umber text-center">
         Already have an account?{" "}
         <Link
-          href="/auth/login"
+          href="/login"
           className="underline hover:text-orange transition-colors"
         >
           Sign in

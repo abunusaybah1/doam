@@ -9,7 +9,7 @@ export default async function ResetPasswordPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/auth/forgot-password?error=invalid_link");
+  if (!user) redirect("/forgot-password?error=invalid_link");
 
   return (
     <main className="min-h-screen bg-bark flex items-center justify-center px-6">

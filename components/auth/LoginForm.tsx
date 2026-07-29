@@ -171,14 +171,14 @@ const LoginForm = ({
       <p className="text-[.75rem] tracking-wide text-umber text-center">
         Don&apos;t have an account?{" "}
         <Link
-          href="/auth/signup"
+          href="/signup"
           className="underline hover:text-orange transition-colors"
         >
           Create one
         </Link>
       </p>
       <Link
-        href="/auth/forgot-password"
+        href="/forgot-password"
         className="text-orange hover:underline text-center text-[.75rem] tracking-wide mt-2"
       >
         Forgot password?

@@ -247,7 +247,7 @@ export default function ClaimSection({
         </p>
         <button
           onClick={() =>
-            router.push(`/auth/login?redirectTo=/problems/${problemId}`)
+            router.push(`/login?redirectTo=/problems/${problemId}`)
           }
           className="mt-2 bg-orange px-5 py-3 cursor-pointer text-parch text-[0.75rem] uppercase tracking-wide font-bold hover:bg-ember transition-colors w-fit"
         >
