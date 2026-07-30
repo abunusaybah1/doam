@@ -15,9 +15,9 @@ export default function Footer() {
               height={50}
             />
           </div>
-          <span className="font-syne font-bold text-base text-parch -mt-5 md:mt-0 lg:mt-0">
+          {/* <span className="font-syne font-bold text-base text-parch -mt-5 md:mt-0 lg:mt-0">
             Do&minus;am
-          </span>
+          </span> */}
         </div>
 
         <span className="font-mono text-[11px] text-parch">

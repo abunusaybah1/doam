@@ -117,7 +117,7 @@ export default async function DashboardPage() {
         {/* all open problems */}
         <section className="mt-12">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-playfair text-xl text-parch">Open problems</h2>
+            <h2 className="font-playfair text-xl text-parch">Active problems</h2>
             <Link
               href="/problems"
               className="text-[0.7rem] bg-orange uppercase tracking-widest text-parch hover:bg-parch hover:text-orange hover:font-semibold px-4 py-2 transition-colors"
