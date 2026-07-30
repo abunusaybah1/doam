@@ -23,13 +23,16 @@ export async function submitSolutionReport(formData: FormData) {
   const cost = costRaw ? parseFloat(costRaw) : null;
   const peopleHelpedRaw = formData.get("people_helped") as string;
   const people_helped = peopleHelpedRaw ? parseInt(peopleHelpedRaw) : null;
-  const evidenceFile = formData.get("evidence") as File | null;
+  const evidenceFiles = formData.getAll("evidence") as File[];
 
   if (!summary || summary.trim().length < 10) {
     return { error: "Please describe what was done in a bit more detail." };
   }
-  if (!evidenceFile || evidenceFile.size === 0) {
+  if (!evidenceFiles || evidenceFiles.length === 0) {
     return { error: "At least one piece of evidence (a photo) is required." };
+  }
+  if (evidenceFiles.length > 3) {
+    return { error: "You can upload at most 3 evidence photos." };
   }
 
   const { data: claim } = await supabase
@@ -46,19 +49,26 @@ export async function submitSolutionReport(formData: FormData) {
     };
   }
 
-  const ext = evidenceFile.name.split(".").pop();
-  const path = `${user.id}/${claim_id}/${Date.now()}.${ext}`;
+  const evidenceUrls: string[] = [];
 
-  const { error: uploadError } = await supabase.storage
-    .from("solution-evidence")
-    .upload(path, evidenceFile, { upsert: false });
+  for (const file of evidenceFiles) {
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `${claim_id}/${crypto.randomUUID()}.${ext}`;
 
-  if (uploadError)
-    return { error: "Evidence upload failed: " + uploadError.message };
+    const { error: uploadError } = await supabase.storage
+      .from("solution-evidence")
+      .upload(path, file, { upsert: false });
 
-  const { data: publicUrl } = supabase.storage
-    .from("solution-evidence")
-    .getPublicUrl(path);
+    if (uploadError) {
+      return { error: "Evidence upload failed: " + uploadError.message };
+    }
+
+    const { data: publicUrl } = supabase.storage
+      .from("solution-evidence")
+      .getPublicUrl(path);
+
+    evidenceUrls.push(publicUrl.publicUrl);
+  }
 
   const { error: insertError } = await supabase
     .from("solution_reports")
@@ -67,7 +77,7 @@ export async function submitSolutionReport(formData: FormData) {
       problem_id,
       solver_id: user.id,
       summary,
-      evidence_url: publicUrl.publicUrl,
+      evidence_urls: evidenceUrls,
       video_url,
       cost,
       people_helped,

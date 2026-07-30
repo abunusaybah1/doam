@@ -8,7 +8,7 @@ export default async function AdminSolutionsPage() {
     .from("solution_reports")
     .select(
       `
-      id, summary, evidence_url, video_url, cost, people_helped, created_at,
+      id, summary, evidence_urls, video_url, cost, people_helped, created_at,
       problems ( id, heading ),
       user_profiles ( full_name, username )
     `,

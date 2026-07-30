@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 type Report = {
   id: string;
   summary: string;
-  evidence_url: string;
+  evidence_urls: string[];
   video_url: string | null;
   cost: number | null;
   people_helped: number | null;
@@ -71,13 +71,17 @@ export default function SolutionReviewRow({ report }: { report: Report }) {
         {report.summary}
       </p>
 
-      <div className="relative w-32 h-32 bg-bark">
-        <Image
-          src={report.evidence_url}
-          alt="Evidence"
-          fill
-          className="object-cover"
-        />
+      <div className="flex gap-2">
+        {report.evidence_urls?.map((url, i) => (
+          <div key={i} className="relative w-32 h-32 bg-bark">
+            <Image
+              src={url}
+              alt={`Evidence ${i + 1}`}
+              fill
+              className="object-cover"
+            />
+          </div>
+        ))}
       </div>
 
       {report.video_url && (
